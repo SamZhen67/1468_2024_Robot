@@ -84,7 +84,7 @@ public class SwerveModule {
     }
 
     public Rotation2d getCANcoder(){
-        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
+        return Rotation2d.fromRotations(angleEncoder.getPosition().getValue());
     }
 
     private Rotation2d waitForCANcoder(){
@@ -93,7 +93,7 @@ public class SwerveModule {
     }
 
     public void resetToAbsolute(){
-        double absolutePosition = Conversions.degreesToTalon(waitForCANcoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
+        double absolutePosition = Conversions.degreesToTalon(getCANcoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
         mAngleMotor.setPosition(absolutePosition); //FIXME [DONE]: Originally setRotorPosition
     }
 
