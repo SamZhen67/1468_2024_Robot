@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 3,
-      "y": 5
+      "x": 4,
+      "y": 4
     },
     "rotation": 0.0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "Circle"
           }
         }
       ]
