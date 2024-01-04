@@ -1,19 +1,26 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-// will be used once robot design is developed
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+
+/* // For choreo path generation
+import com.choreo.lib.Choreo;
+import com.choreo.lib.ChoreoTrajectory; */
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -22,6 +29,9 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+    /*A chooser for autonomous commands */
+    SendableChooser<Command> autonomousChooser = new SendableChooser<>();
+    
     /* Controllers */
     private final Joystick driver = new Joystick(0);
 
@@ -52,6 +62,10 @@ public class RobotContainer {
 
         // Configure the button bindings
         configureButtonBindings();
+
+        // Build auto chooser
+        autonomousChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Choose Auto", autonomousChooser);
     }
 
     /**
@@ -72,6 +86,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new exampleAuto(s_Swerve);
+        return autonomousChooser.getSelected();
     }
 }

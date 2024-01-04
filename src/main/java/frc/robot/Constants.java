@@ -12,6 +12,11 @@ import edu.wpi.first.math.util.Units;
 import frc.lib.util.COTSFalconSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
 
+// PathPlanner libs
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+
 public final class Constants {
     public static final double stickDeadband = 0.1;
 
@@ -127,6 +132,19 @@ public final class Constants {
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
+
+        // For PathPlanner
+        public static final double maxModuleSpeed = 4.5; // M/S //FIXME, match to choreo number
+        public static final Translation2d flModuleOffset = new Translation2d(wheelBase / 2.0, trackWidth / 2.0);
+
+        //TODO: For pathplanner tuning
+        public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
+            new PIDConstants(5.0, 0, 0), // Translation constants 
+            new PIDConstants(5.0, 0, 0), // Rotation constants 
+            maxModuleSpeed, 
+            flModuleOffset.getNorm(), // Drive base radius (distance from center to furthest module) 
+            new ReplanningConfig()
+        );
     }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
