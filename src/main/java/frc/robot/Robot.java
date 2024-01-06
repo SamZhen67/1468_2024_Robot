@@ -33,11 +33,11 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    // // Setup Port Forwarding to enable Limelight communication while tethered to your robot over USB.
-    // // Forward ports 5800, 5801, 5802, 5803, 5804, 5805, 5806, and 5807
-    // for (int port = 5800; port <= 5807; port++) {
-    //   PortForwarder.add(port, "limelight.local", port);
-    // }
+    // Setup Port Forwarding to enable Limelight communication while tethered to your robot over USB.
+    // Forward ports 5800, 5801, 5802, 5803, 5804, 5805, 5806, and 5807
+    for (int port = 5800; port <= 5807; port++) {
+      PortForwarder.add(port, "limelight.local", port);
+    }
   }
 
   /**
