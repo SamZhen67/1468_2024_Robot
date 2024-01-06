@@ -4,9 +4,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class Limelight extends SubsystemBase {
 
@@ -20,18 +18,28 @@ public class Limelight extends SubsystemBase {
 
         // Adjust as needed
         double speedPercent = 0.1;
-        double horizontalOffsetThreshold = 1.0;
+        double horizontalOffsetThreshold = 5.0;
 
         if (valid == 1) { // Execute only if Limelight sees valid target
             if (Math.abs(horizontalOffset) > horizontalOffsetThreshold) {
                 if (horizontalOffset < 0) { // Slide left
-
+                    SmartDashboard.putString("Slide Direction", "Left");
                 }
                 else if (horizontalOffset >= 0) { // Slide right
-
+                    SmartDashboard.putString("Slide Direction", "Right");
                 }
             }
+            else {
+                SmartDashboard.putString("Slide Direction", "STOP");
+            }
         } 
+        else {
+            SmartDashboard.putString("Slide Direction", "PRESSED, No valid targets");
+        }
+    }
+
+    public void centerAprilTagRelease() {
+        SmartDashboard.putString("Slide Direction", "NOT ACTIVE");
     }
 
     @Override
@@ -54,5 +62,7 @@ public class Limelight extends SubsystemBase {
         SmartDashboard.putNumber("LimelightX", x);
         SmartDashboard.putNumber("LimelightY", y);
         SmartDashboard.putNumber("LimelightArea", area);
+
+        // SmartDashboard.putString("Slide Direction", "");
     }
 }
