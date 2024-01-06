@@ -13,6 +13,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -42,10 +46,12 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, PS4Controller.Button.kL1.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, PS4Controller.Button.kL2.value);
+    private final JoystickButton robotCentric = new JoystickButton(driver, PS4Controller.Button.kR1.value);
+    // private final JoystickButton centerAprilTag = new JoystickButton(driver, PS4Controller.Button.kCircle.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    // private final Limelight s_Limelight = new Limelight();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -66,6 +72,26 @@ public class RobotContainer {
         // Build auto chooser
         autonomousChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Choose Auto", autonomousChooser);
+
+
+        // /// Limelight SmartDashboard
+        // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        // NetworkTableEntry tv = table.getEntry("tv");
+        // NetworkTableEntry tx = table.getEntry("tx");
+        // NetworkTableEntry ty = table.getEntry("ty");
+        // NetworkTableEntry ta = table.getEntry("ta");
+
+        // //read values periodically
+        // double valid = tv.getDouble(0.0);
+        // double x = tx.getDouble(0.0);
+        // double y = ty.getDouble(0.0);
+        // double area = ta.getDouble(0.0);
+
+        // //post to smart dashboard periodically
+        // SmartDashboard.putNumber("ValidTarget", valid);
+        // SmartDashboard.putNumber("LimelightX", x);
+        // SmartDashboard.putNumber("LimelightY", y);
+        // SmartDashboard.putNumber("LimelightArea", area);
     }
 
     /**
@@ -77,6 +103,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        // centerAprilTag.whileTrue(new InstantCommand(() -> s_Limelight.centerAprilTag()));
     }
 
     /**
