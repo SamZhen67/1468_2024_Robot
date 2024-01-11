@@ -8,34 +8,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
 
-    // Slide left or right until AprilTag is centered in Limelight 
-    public void centerAprilTag() {
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        NetworkTableEntry tv = table.getEntry("tv");
-        NetworkTableEntry tx = table.getEntry("tx");
-        double valid = tv.getDouble(0.0);
-        double horizontalOffset = tx.getDouble(0.0);
+    public void printLeft() {
+        SmartDashboard.putString("Slide Direction", "Left");
+    }
 
-        // Adjust as needed
-        double speedPercent = 0.1;
-        double horizontalOffsetThreshold = 5.0;
+    public void printRight() {
+        SmartDashboard.putString("Slide Direction", "Right");
+    }
 
-        if (valid == 1) { // Execute only if Limelight sees valid target
-            if (Math.abs(horizontalOffset) > horizontalOffsetThreshold) {
-                if (horizontalOffset < 0) { // Slide left
-                    SmartDashboard.putString("Slide Direction", "Left");
-                }
-                else if (horizontalOffset >= 0) { // Slide right
-                    SmartDashboard.putString("Slide Direction", "Right");
-                }
-            }
-            else {
-                SmartDashboard.putString("Slide Direction", "STOP");
-            }
-        } 
-        else {
-            SmartDashboard.putString("Slide Direction", "PRESSED, No valid targets");
-        }
+    public void printStop() {
+        SmartDashboard.putString("Slide Direction", "STOP");
+    }
+
+    public void printNoValidTargets() {
+        SmartDashboard.putString("Slide Direction", "PRESSED, No valid targets");
     }
 
     public void centerAprilTagRelease() {
@@ -62,7 +48,5 @@ public class Limelight extends SubsystemBase {
         SmartDashboard.putNumber("LimelightX", x);
         SmartDashboard.putNumber("LimelightY", y);
         SmartDashboard.putNumber("LimelightArea", area);
-
-        // SmartDashboard.putString("Slide Direction", "");
     }
 }

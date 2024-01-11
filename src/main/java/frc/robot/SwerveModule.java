@@ -84,17 +84,12 @@ public class SwerveModule {
     }
 
     public Rotation2d getCANcoder(){
-        return Rotation2d.fromRotations(angleEncoder.getPosition().getValue());
-    }
-
-    private Rotation2d waitForCANcoder(){
-        /* wait for up to 250ms for a new CANcoder position */
-        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().waitForUpdate(250).getValue());
+        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
     }
 
     public void resetToAbsolute(){
         double absolutePosition = Conversions.degreesToTalon(getCANcoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
-        mAngleMotor.setPosition(absolutePosition); //FIXME [DONE]: Originally setRotorPosition
+        mAngleMotor.setPosition(absolutePosition); 
     }
 
     private void configAngleEncoder(){    
@@ -108,7 +103,7 @@ public class SwerveModule {
 
     private void configDriveMotor(){
         mDriveMotor.getConfigurator().apply(Robot.ctreConfigs.swerveDriveFXConfig);
-        mDriveMotor.getConfigurator().setPosition(0); //FIXME [DONE]: Originally setRotorPosition
+        mDriveMotor.getConfigurator().setPosition(0);
     }
 
     public SwerveModuleState getState(){

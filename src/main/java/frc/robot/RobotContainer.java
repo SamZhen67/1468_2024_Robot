@@ -7,14 +7,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
-import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -81,9 +80,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-
-        centerAprilTag.whileTrue(new RunCommand(() -> s_Limelight.centerAprilTag()));
-        centerAprilTag.onFalse(new InstantCommand(() -> s_Limelight.centerAprilTagRelease()));
+        centerAprilTag.whileTrue(Commands.parallel(new CenterAprilTagPrinting(s_Limelight), new SlideToAprilTag(s_Swerve)));
     }
 
     /**
