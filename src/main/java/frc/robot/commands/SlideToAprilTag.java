@@ -7,10 +7,12 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SlideToAprilTag extends Command {
   private final Swerve s_Swerve;
@@ -29,33 +31,39 @@ public class SlideToAprilTag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry tv = table.getEntry("tv");
-    NetworkTableEntry tx = table.getEntry("tx");
-    double valid = tv.getDouble(0.0);
-    double horizontalOffset = tx.getDouble(0.0);
+     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+     NetworkTableEntry tv = table.getEntry("tv");
+  //   NetworkTableEntry tx = table.getEntry("tx");
+     double valid = tv.getDouble(0.0);
+  //   double horizontalOffset = tx.getDouble(0.0);
 
-    double speedPercent = 0.1;
-    double horizontalOffsetThreshold = 5.0;
+     double xPower, yPower;
+  //   double horizontalOffsetThreshold = 5.0;
 
-    if (valid == 1) { // Execute only if Limelight sees valid target
-      if (Math.abs(horizontalOffset) > horizontalOffsetThreshold) {
-        if (horizontalOffset < 0) { // Slide left
+    double[] botpose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[6]);
+
+   double xOffsetInches = botpose[0] * 39.3701;
+   double yOffsetInches =botpose[2] * 39.3701 + 36.0;   // we want oour offset 36 inches away from robot in Y direction
+  double zOffsetInches =botpose[1] * 39.3701;
+   double rollDegrees = botpose[3]* (180/Math.PI) ;
+   double pitchDegrees = botpose[4]* (180/Math.PI) ;
+    double yawDegrees =botpose[5] * (180/Math.PI);
+
+    if (Math.abs(xOffsetInches) >50) xPower = -.5*xOffsetInches/xOffsetInches; else xPower = xOffsetInches/100.0;
+    xPower = MathUtil.applyDeadband(xPower, .025);
+     if (Math.abs(yOffsetInches) >50) yPower = -.5*yOffsetInches/yOffsetInches; else yPower = -yOffsetInches/100.0;
+    yPower = MathUtil.applyDeadband(yPower, .025);
+
+
+    if (valid == 1.0) { // Execute only if Limelight sees valid target
+    
           s_Swerve.drive(
-            new Translation2d(0, speedPercent).times(Constants.Swerve.maxSpeed), 
+            new Translation2d(xPower, yPower).times(Constants.Swerve.maxSpeed), 
             0 * Constants.Swerve.maxAngularVelocity, 
             true, 
-            true
-          );
-        }
-        else if (horizontalOffset >= 0) { // Slide right
-          s_Swerve.drive(
-            new Translation2d(0, -speedPercent).times(Constants.Swerve.maxSpeed), 
-            0 * Constants.Swerve.maxAngularVelocity, 
-            true, 
-            true
-          );
-        }
+            true);
+
+        
       }
       else {
         s_Swerve.drive(
@@ -65,7 +73,6 @@ public class SlideToAprilTag extends Command {
             true
           );
       }
-    } 
   }
 
 

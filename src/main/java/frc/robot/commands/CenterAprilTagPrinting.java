@@ -36,7 +36,7 @@ public class CenterAprilTagPrinting extends Command {
 
     double horizontalOffsetThreshold = 5.0;
 
-    if (valid == 1) { // Execute only if Limelight sees valid target
+    if (valid == 1.0) { // Execute only if Limelight sees valid target
       if (Math.abs(horizontalOffset) > horizontalOffsetThreshold) {
         if (horizontalOffset < 0) { // Slide left
           s_Limelight.printLeft();
