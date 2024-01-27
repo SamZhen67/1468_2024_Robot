@@ -27,8 +27,8 @@ public final class Constants {
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L3); // 2024 robot currently uses L3 ratio
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(26.25); //TODO [DONE]: This must be tuned to specific robot // For a 31.5 x 31.5 base
-        public static final double wheelBase = Units.inchesToMeters(26.25); //TODO [DONE]: This must be tuned to specific robot// For a 31.5 x 31.5 base
+        public static final double trackWidth = Units.inchesToMeters(21.75); //TODO [DONE]: This must be tuned to specific robot // For a 27 x 27 base
+        public static final double wheelBase = Units.inchesToMeters(21.75); //TODO [DONE]: This must be tuned to specific robot// For a 27 x 27 base
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
