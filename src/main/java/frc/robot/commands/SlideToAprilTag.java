@@ -49,7 +49,7 @@ public class SlideToAprilTag extends Command {
    double pitchDegrees = botpose[4]* (180/Math.PI) ;
     double yawDegrees =botpose[5] * (180/Math.PI);
 
-    if (Math.abs(xOffsetInches) >50) xPower = -.5*xOffsetInches/xOffsetInches; else xPower = xOffsetInches/100.0;
+    if (Math.abs(xOffsetInches) >50) xPower = -.5*xOffsetInches/xOffsetInches; else xPower = -xOffsetInches/100.0;
     xPower = MathUtil.applyDeadband(xPower, .025);
      if (Math.abs(yOffsetInches) >50) yPower = -.5*yOffsetInches/yOffsetInches; else yPower = -yOffsetInches/100.0;
     yPower = MathUtil.applyDeadband(yPower, .025);
@@ -60,7 +60,7 @@ public class SlideToAprilTag extends Command {
           s_Swerve.drive(
             new Translation2d(xPower, yPower).times(Constants.Swerve.maxSpeed), 
             0 * Constants.Swerve.maxAngularVelocity, 
-            true, 
+            false,                   // TA TODO: Probably want false here!!!! (was true)
             true);
 
         
