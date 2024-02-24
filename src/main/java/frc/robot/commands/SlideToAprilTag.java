@@ -12,7 +12,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SlideToAprilTag extends Command {
   private final Swerve s_Swerve;
@@ -31,48 +31,46 @@ public class SlideToAprilTag extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-     NetworkTableEntry tv = table.getEntry("tv");
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTableEntry tv = table.getEntry("tv");
   //   NetworkTableEntry tx = table.getEntry("tx");
-     double valid = tv.getDouble(0.0);
+    double valid = tv.getDouble(0.0);
   //   double horizontalOffset = tx.getDouble(0.0);
 
-     double xPower, yPower;
+    double xPower, yPower;
   //   double horizontalOffsetThreshold = 5.0;
 
     double[] botpose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[6]);
 
-   double xOffsetInches = botpose[0] * 39.3701;
-   double yOffsetInches =botpose[2] * 39.3701 + 36.0;   // we want oour offset 36 inches away from robot in Y direction
-  double zOffsetInches =botpose[1] * 39.3701;
-   double rollDegrees = botpose[3]* (180/Math.PI) ;
-   double pitchDegrees = botpose[4]* (180/Math.PI) ;
-    double yawDegrees =botpose[5] * (180/Math.PI);
+    double xOffsetInches = botpose[0] * 39.3701;
+    double yOffsetInches = botpose[2] * 39.3701 + 36.0;   // we want oour offset 36 inches away from robot in Y direction
+  //  double zOffsetInches = botpose[1] * 39.3701;
+  //  double rollDegrees = botpose[3]* (180/Math.PI) ;
+  //  double pitchDegrees = botpose[4]* (180/Math.PI) ;
+  //  double yawDegrees =botpose[5] * (180/Math.PI);
 
-    if (Math.abs(xOffsetInches) >50) xPower = -.5*xOffsetInches/xOffsetInches; else xPower = -xOffsetInches/100.0;
+    if (Math.abs(xOffsetInches) >25) xPower = -.25*xOffsetInches/Math.abs(xOffsetInches); else xPower = -xOffsetInches/100.0;
     xPower = MathUtil.applyDeadband(xPower, .025);
-     if (Math.abs(yOffsetInches) >50) yPower = -.5*yOffsetInches/yOffsetInches; else yPower = -yOffsetInches/100.0;
+    if (Math.abs(yOffsetInches) >25) yPower = -.25*yOffsetInches/Math.abs(yOffsetInches); else yPower = -yOffsetInches/100.0;
     yPower = MathUtil.applyDeadband(yPower, .025);
 
 
     if (valid == 1.0) { // Execute only if Limelight sees valid target
-    
-          s_Swerve.drive(
-            new Translation2d(xPower, yPower).times(Constants.Swerve.maxSpeed), 
-            0 * Constants.Swerve.maxAngularVelocity, 
-            false,                   // TA TODO: Probably want false here!!!! (was true)
-            true);
-
-        
+      s_Swerve.drive(
+//        new Translation2d(xPower, yPower).times(Constants.Swerve.maxSpeed), 
+        new Translation2d(yPower, xPower).times(Constants.Swerve.maxSpeed), 
+        0 * Constants.Swerve.maxAngularVelocity, 
+        false,                   // TA TODO: Probably want false here!!!! (was true)
+        true);
       }
-      else {
-        s_Swerve.drive(
-            new Translation2d(0, 0).times(Constants.Swerve.maxSpeed), 
-            0 * Constants.Swerve.maxAngularVelocity, 
-            true, 
-            true
-          );
-      }
+    else {
+      s_Swerve.drive(
+        new Translation2d(0, 0).times(Constants.Swerve.maxSpeed), 
+        0 * Constants.Swerve.maxAngularVelocity, 
+        false, 
+        true
+      );
+    }
   }
 
 

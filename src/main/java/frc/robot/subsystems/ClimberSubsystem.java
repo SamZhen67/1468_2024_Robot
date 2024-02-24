@@ -17,7 +17,7 @@ import com.revrobotics.SparkPIDController;
 
 public class ClimberSubsystem extends SubsystemBase {
 
-    private CANSparkMax leftClimberMotor = new CANSparkMax(kLeftClimerMotorPort, CANSparkMax.MotorType.kBrushless);
+    private CANSparkMax leftClimberMotor = new CANSparkMax(kLeftClimberMotorPort, CANSparkMax.MotorType.kBrushless);
     private RelativeEncoder climberEncoder =  leftClimberMotor.getEncoder();//
     private CANSparkMax rightClimberMotor = new CANSparkMax(kRightClimberMotorPort, CANSparkMax.MotorType.kBrushless);
  
@@ -38,6 +38,16 @@ public class ClimberSubsystem extends SubsystemBase {
        log();
     }
 
+    public void setClimberMotorsToCoast() {
+      leftClimberMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+      rightClimberMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    }
+
+    public void setClimberMotorsToBrake() {
+      leftClimberMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+      rightClimberMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    }
+  
     public SparkPIDController getIntegratedSparkPID( ) {
         return leftClimberMotor.getPIDController();
      }

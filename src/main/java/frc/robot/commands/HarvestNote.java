@@ -23,13 +23,15 @@ private final StorageSubsystem m_storage ;
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_harvester.getNote();
+    m_storage.getNote();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_harvester.getNote();
-    m_storage.getNote();
+
   }
 
 
@@ -43,6 +45,8 @@ private final StorageSubsystem m_storage ;
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
+//    return false;   // TODO - FIX WHEN LIMIT SW IS INSTALLED
     return m_harvester.getHarvesterLimitSwitch();
   }
 }

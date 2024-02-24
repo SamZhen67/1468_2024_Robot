@@ -21,7 +21,7 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
 
     public static final class Swerve {
-        public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW- // Changed to true on 12/28/23 - SZ
+        public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW- // TODO: TA Changed to true on 12/28/23 - SZ
 
         public static final COTSFalconSwerveConstants chosenModule =  //TODO [DONE]: This must be tuned to specific robot
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L3); // 2024 robot currently uses L3 ratio

@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ElbowSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import edu.wpi.first.net.PortForwarder;
 
 /**
@@ -22,6 +24,10 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private  ElbowSubsystem s_Elbow ;
+  private  ElevatorSubsystem s_Elevator ;
+  private  ClimberSubsystem s_Climber ;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -32,6 +38,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+//    s_Elbow = new ElbowSubsystem();
+//    s_Elevator = new ElevatorSubsystem();
+//    s_Climber = new ClimberSubsystem();
 
     // Setup Port Forwarding to enable Limelight communication while tethered to your robot over USB.
     // Forward ports 5800, 5801, 5802, 5803, 5804, 5805, 5806, and 5807
@@ -58,14 +67,27 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+
+//    s_Elbow.setElbowMotorsToCoast();
+//    s_Elevator.setElevatorMotorsToCoast();
+//    s_Climber.setClimberMotorsToCoast();
+
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    
+ //   s_Elbow.setElbowMotorsToBrake();
+ //   s_Elevator.setElevatorMotorsToBrake();
+ //   s_Climber.setClimberMotorsToBrake();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -80,6 +102,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+
+    
+//    s_Elbow.setElbowMotorsToBrake();
+//    s_Elevator.setElevatorMotorsToBrake();
+//    s_Climber.setClimberMotorsToBrake();
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

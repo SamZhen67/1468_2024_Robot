@@ -67,7 +67,7 @@ public class COTSFalconSwerveConstants {
 
     /** Swerve Drive Specialties - MK4i Module*/
     public static COTSFalconSwerveConstants SDSMK4i(double driveGearRatio){
-        double wheelDiameter = Units.inchesToMeters(4.0); // TODO [DONE]: Can change over time due to tread wear, 2023 was 3.82
+        double wheelDiameter = Units.inchesToMeters(3.81); // TODO [DONE]: Can change over time due to tread wear, 2023 was 3.82
 
         /** (150 / 7) : 1 */
         double angleGearRatio = ((150.0 / 7.0) / 1.0);

@@ -141,6 +141,17 @@ public class Swerve extends SubsystemBase {
         return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
+    public double getYawDeg() {
+        return (gyro.getYaw());
+    }
+    public double getRoll() {
+        return (gyro.getRoll());
+    }
+
+    public double getPitch() {
+        return (gyro.getPitch());
+    }
+
     public void resetModulesToAbsolute(){
         for(SwerveModule mod : mSwerveMods){
             mod.resetToAbsolute();
@@ -157,5 +168,18 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
+
+
+        SmartDashboard.putNumber("Pitch ", getPitch());
+        SmartDashboard.putNumber("Roll ", getRoll());
+        SmartDashboard.putNumber("Yaw ", getYawDeg());
+        SmartDashboard.putNumber("X_in ", this.swerveOdometry.getPoseMeters().getX() * 39.37);
+        SmartDashboard.putNumber("Y_in ", this.swerveOdometry.getPoseMeters().getY() * 39.37);
+//        SmartDashboard.putNumber("X_in ", this.swerveOdometry.getPoseMeters().getX() * 1.00);
+//        SmartDashboard.putNumber("Y_in ", this.swerveOdometry.getPoseMeters().getY() * 1.00);
+
+
+
+
     }
 }

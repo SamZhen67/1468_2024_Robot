@@ -5,8 +5,9 @@ package frc.robot.subsystems;
 
 import static frc.robot.ConstantsMechanisms.StorageConstants.*;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+//import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix6.hardware.TalonFX;
+//import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,7 +16,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class StorageSubsystem extends SubsystemBase {
   
   // Storage Motor Controller
-  private CANSparkMax m_storage; // NEO motor
+ // private CANSparkMax m_storage; // NEO motor - swapped out
+  // Shooter Motor Controllers
+  private TalonFX m_storage = new TalonFX(STORAGE_MOTOR_ID,"rio"); // KRAKEN motor
 
   // Storage Limit Switch
   DigitalInput storageLimitSwitch = new DigitalInput(STORAGE_LIMIT_SWITCH_ID);
@@ -23,7 +26,7 @@ public class StorageSubsystem extends SubsystemBase {
   /** Subsystem for controlling the Storage */
   public StorageSubsystem() {
     // Instantiate the Storage motor controller
-    m_storage = new CANSparkMax(STORAGE_MOTOR_ID, MotorType.kBrushless);
+//    m_storage = new CANSparkMax(STORAGE_MOTOR_ID, MotorType.kBrushless);
 
 
     // Reverse it if needed
@@ -53,7 +56,7 @@ public class StorageSubsystem extends SubsystemBase {
     // Put the speed on SmartDashboard
     SmartDashboard.putNumber("Storage Mtr Speed", m_storage.get());
     SmartDashboard.putBoolean("Storage Limit Switch", getStorageLimitSwitch());
-    SmartDashboard.putNumber("Storage Motor Temp", m_storage.getMotorTemperature());
+    SmartDashboard.putNumber("Storage Motor Temp", m_storage.getDeviceTemp().getValueAsDouble());
 
   }
 }

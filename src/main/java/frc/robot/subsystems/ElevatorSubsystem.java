@@ -38,6 +38,21 @@ public class ElevatorSubsystem extends SubsystemBase {
        log();
     }
 
+    public void setElevatorMotorsToCoast() {
+      leftElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+      rightElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    }
+
+    public void setElevatorMotorsToBrake() {
+      leftElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+      rightElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kBrake); }
+
+   public void resetElevatorEncGyro() {
+        elevatorEncoder.setPosition(kZeroOffset);
+
+      }
+      
+
     public SparkPIDController getIntegratedSparkPID( ) {
         return leftElevatorMotor.getPIDController();
      }

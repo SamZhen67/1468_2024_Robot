@@ -36,16 +36,17 @@ public class Limelight extends SubsystemBase {
         NetworkTableEntry tx = table.getEntry("tx");
         NetworkTableEntry ty = table.getEntry("ty");
         NetworkTableEntry tz = table.getEntry("tz");
-        NetworkTableEntry yaw = table.getEntry("yaw");
+//        NetworkTableEntry yaw = table.getEntry("yaw");
         NetworkTableEntry ta = table.getEntry("ta");
         double[] botpose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[6]);
+//        double[] AT4 = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ID4").getDoubleArray(new double[6]);
 
 
         //read values periodically
         double valid = tv.getDouble(0.0);
         double x = tx.getDouble(0.0);
         double y = ty.getDouble(0.0);
-        double z = ty.getDouble(0.0);
+        double z = tz.getDouble(0.0);
 
         double area = ta.getDouble(0.0);
 

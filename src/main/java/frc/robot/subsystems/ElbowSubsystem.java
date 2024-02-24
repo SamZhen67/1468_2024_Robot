@@ -36,6 +36,23 @@ public class ElbowSubsystem extends SubsystemBase {
        log();
     }
 
+
+    public void setElbowMotorsToCoast() {
+      leftElbowMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+      rightElbowMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    }
+
+    public void setElbowMotorsToBrake() {
+      leftElbowMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+      rightElbowMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    }
+
+ 
+    public void resetElbowEncGyro() {
+      elbowEncoder.setPosition(kZeroOffset);
+
+    }
+
     
     public SparkPIDController getIntegratedSparkPID( ) {
         return leftElbowMotor.getPIDController();
@@ -58,7 +75,7 @@ public class ElbowSubsystem extends SubsystemBase {
       }
  
      /** Set the elevator motor to move in the up direction. */
-     public void elevatorStop() {
+     public void elbowStop() {
         leftElbowMotor.set(0);
      }
  

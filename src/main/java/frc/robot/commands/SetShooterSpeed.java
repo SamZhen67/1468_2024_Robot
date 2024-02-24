@@ -4,23 +4,27 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.HarvesterSubsystem;
+import frc.robot.Constants;
+
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.StorageSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
+import java.util.function.DoubleSupplier;
 
-public class EjectNote extends Command {
-private final HarvesterSubsystem m_harvester;
-private final StorageSubsystem m_storage;
-private final ShooterSubsystem m_shooter;
-  public EjectNote(HarvesterSubsystem harvester, StorageSubsystem storage, ShooterSubsystem shooter) {
+import edu.wpi.first.math.MathUtil;
+
+
+public class SetShooterSpeed extends Command {
+  private final ShooterSubsystem m_shooter;
+  private final DoubleSupplier m_leftSpeedSup;
+  private final DoubleSupplier m_rightSpeedSup;
+
+  /** Creates a new CenterAprilTag. */
+  public SetShooterSpeed(ShooterSubsystem shooter, DoubleSupplier leftSpeedSup,  DoubleSupplier  rightSpeedSup) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_harvester = harvester;
-    addRequirements(m_harvester);
-    m_storage = storage;
-    addRequirements(m_storage);
     m_shooter = shooter;
+    m_leftSpeedSup = leftSpeedSup;
+    m_rightSpeedSup = rightSpeedSup;
     addRequirements(m_shooter);
   }
 
@@ -31,22 +35,23 @@ private final ShooterSubsystem m_shooter;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_harvester.ejectNote();
-    m_storage.ejectNote();
-    m_shooter.ejectNote();
+
+    double leftSpeedVal = MathUtil.applyDeadband(m_leftSpeedSup.getAsDouble(), Constants.stickDeadband);
+    double rightSpeedVal = MathUtil.applyDeadband(m_rightSpeedSup.getAsDouble(), Constants.stickDeadband);
+
+    m_shooter.setShooterSpeeds(leftSpeedVal, rightSpeedVal);
   }
+
+
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_harvester.stop();
-    m_storage.stop();
     m_shooter.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-  //  return !m_harvester.getHarvesterLimitSwitch();
- return false;
-}
+    return false;
+  }
 }
