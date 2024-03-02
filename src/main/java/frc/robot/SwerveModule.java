@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -119,4 +120,18 @@ public class SwerveModule {
             getAngle()
         );
     }
+
+
+    public void setBrakeMode(){
+        mDriveMotor.setNeutralMode(NeutralModeValue.Brake);
+        mAngleMotor.setNeutralMode(NeutralModeValue.Brake);       
+    }
+
+    public void setCoastMode(){
+        mDriveMotor.setNeutralMode(NeutralModeValue.Coast);
+        mAngleMotor.setNeutralMode(NeutralModeValue.Coast);       
+    }
+
+
+
 }

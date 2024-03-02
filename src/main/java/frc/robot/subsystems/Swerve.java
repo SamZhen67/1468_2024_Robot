@@ -89,6 +89,29 @@ public class Swerve extends SubsystemBase {
         }
     }    
 
+
+
+    public void stop() {
+        SwerveModuleState[] swerveModuleStates =
+            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                 ChassisSpeeds.fromFieldRelativeSpeeds(
+                                    0.0, 
+                                    0.0, 
+                                    0.0, 
+                                    getYaw()
+                               
+                                ));
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
+        }
+    }    
+
+
+
+
+
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
@@ -144,13 +167,17 @@ public class Swerve extends SubsystemBase {
     public double getYawDeg() {
         return (gyro.getYaw());
     }
+
+    // TA TODO: Done - RoboRio orientation for 2024 has pitch and Roll reversed - so fix functions to reflect this!!!!
     public double getRoll() {
         return (gyro.getRoll());
     }
-
+    //  RoboRio orientation for 2024 has pitch and Roll reversed - so fix functions to reflect this!!!!
     public double getPitch() {
         return (gyro.getPitch());
     }
+    //  RoboRio orientation for 2024 has pitch and Roll reversed - so fix functions to reflect this!!!!
+
 
     public void resetModulesToAbsolute(){
         for(SwerveModule mod : mSwerveMods){

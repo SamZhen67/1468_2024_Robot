@@ -17,7 +17,21 @@ package frc.robot;
 public final class ConstantsMechanisms {
 
     public static final double kSparkMaxEncoderCountsPerRev = 42.0;
-   
+    public static final double kAmpShotDistanceFromAprilTag = 8.75;
+    public static final double kTrapShotDistanceFromAprilTag = 26.5; // TA TODO: Empirically Discover
+
+//////////////////////////    LIMELIGHT     /////////////////////////////////////////
+ 
+public static final class LimelightConstants {
+    public static final int DEFAULT_PIPELINE = 0;
+    public static final int AMP_PIPELINE = 0;       //1
+    public static final int SPEAKER_PIPELINE = 0;   //2
+    public static final int TRAP_PIPELINE = 0;      //3
+  
+}   
+ 
+
+
 
 //////////////////////////    HARVESTER     /////////////////////////////////////////
  
@@ -37,7 +51,7 @@ public static final class HarvesterConstants {
     public static final int STORAGE_MOTOR_ID = 22;  
     public static final boolean STORAGE_INVERT = false;
     public static final int STORAGE_MOTOR_PDH_CHANNEL = 5; // TA TODO: check placement
-    public static final double STORAGE_IN_SPEED = 0.95;     
+    public static final double STORAGE_IN_SPEED = 0.65;     // was .95
     public static final double STORAGE_EJECT_SPEED = -0.5;  //was .95
     public static final int STORAGE_LIMIT_SWITCH_ID = 2;  
 }   
@@ -66,7 +80,7 @@ public static final class ElbowConstants {
     public static final int kRightElbowMotorPort = 32;
 
     public static final double kUpSpeed = 0.15;             // .05 was too slow
-    public static final double kDownSpeed = -0.05;    
+    public static final double kDownSpeed = -0.12;    
 
     // CanSParkMax uses rotations not ticks
     // numerator is conversion to degrees taking into account the gear ratio (25:1 - was 100:1) and sprocket ratio (4:1)
@@ -76,7 +90,7 @@ public static final class ElbowConstants {
     // ****    Below are the PID values for Smart Motion Mode PID - DO not remove;
     // ****    This is a Position based PID That uses a Trapazoidal Profile for movement
     public static final double kP = 5e-5; 
-    public static final double kI = 1e-7;   //TODO: was 1e-6
+    public static final double kI = 1e-8;   //TODO: was 1e-6 TRIED 1E-7, OVERSHOOTS ON >90
     public static final double kD = 0; 
     public static final double kIz = 0; 
     public static final double kFF = 0.000156; // tried to change - only got worse!
@@ -100,17 +114,18 @@ public static final class ElbowConstants {
     public static final double kHomeAngle = 0.0;
     public static final double kScoreInSpeakerFromPodiumAngle = 35.0;
     public static final double kScoreInSpeakerFromSubwooferAngle = 20.0;
-    public static final double kScoreInAmpAngle = 90.0;
-    public static final double kScoreInTrapAngle = 32.0;        //40 TOO LOW, 35 A HAIR LOW
+    public static final double kScoreInAmpAngle = 95.0;        //105 too low
+    public static final double kScoreInTrapAngle = 20.0;        
 
     public static float kReverseSoftLimit = -1;
     public static float kForwardSoftLimit = 91;
 
-    public static float kSmallMoveDegrees = 5;
-    public static final double kMaxAngle = (kForwardSoftLimit-3);
+    public static float kSmallMoveDegrees = 3;
+    public static final double kMaxAngle = (kForwardSoftLimit-2);
 
-    public static final double kTolerance = 0.50;           
-
+    public static final double kTolerance = 1.50;   // only used when going to zero so loosen up
+    public static final double kHoldStillTolerance = 0.0;          
+    
 
 }
 
@@ -122,20 +137,22 @@ public static final class ElevatorConstants {
     public static final int kLeftElMotorPort = 33;
     public static final int kRightElMotorPort = 34;
 
-    public static final double kUpSpeed = 0.15;      // 0.5 too fast for now
-    public static final double kDownSpeed = -0.05;
+    public static final double kUpSpeed = 0.5;      // now 25:1 raise speed
+    public static final double kDownSpeed = -0.5;
 
     // CanSparkMax Encoder native units is rotations. We convert to inches for the elevator
     // rotations * circumference of wheel (pi*d) / the gear ratio: 
     // d= sprocket diameter  1.757 and gear down is 5:1 
     // THere is a factor of xxx that I dont understand?!?
 //    public static final double kEncoderRotation2Inches = 1.0 * Math.PI * 1.757  / 5  ;
-    public static final double kEncoderRotation2Inches = 1.103955658  ;
+// Added another 5:1 gear down so divide by 5
+    public static final double kEncoderRotation2Inches = (1.103955658 / 5.0) ;
 
     // ****    Below are the PID values for Smart Motion Mode PID - DO not remove;
 // ****    This is a Position based PID That uses a Trapazoidal Profile for movement
-    public static final double kP = 0.00020; 
-    public static final double kI = 0.0;
+//    public static final double kP = 0.00020; 
+    public static final double kP = 0.00080;        // changed from 5:1 to 25:1 - need larger P - 0.00080 TOO SLOW
+    public static final double kI = 0.0000005;            // was 0
     public static final double kD = 0; 
     public static final double kIz = 0; 
     public static final double kFF = 0.0; 
@@ -145,10 +162,10 @@ public static final class ElevatorConstants {
 // Smart Motion Coefficients
     public static final int smartMotionSlot = 0;
     public static final double kMinVel = 0;      // rpm
-    public static final double kMaxVelUp = 3000;   // rpm       // TODO: TA - Optimize - was 4000, start with 500 for testing
-    public static final double kMaxAccUp = 2000;                // TODO: TA - Optimize - was 4000, start with 500 for testing
-    public static final double kMaxVelDown = 3000;   // rpm     // TODO: TA - Optimize - was 4000, start with 500 for testing
-    public static final double kMaxAccDown = 2000;              // TODO: TA - Optimize - was 4000, start with 500 for testing    
+    public static final double kMaxVelUp = 6000;   // rpm       // TODO: TA - Optimize - Elbow is now 25:1 so need high Velo and Acc
+    public static final double kMaxAccUp = 4000;                // TODO: TA - Optimize 
+    public static final double kMaxVelDown = 6000;   // rpm     // TODO: TA - Optimize
+    public static final double kMaxAccDown = 4000;              // TODO: TA - Optimize     
     public static final double kAllowedErr = 0;
     
 // ****    Above are the PID values for Smart Motion Mode PID - DO not remove;
@@ -156,8 +173,8 @@ public static final class ElevatorConstants {
 
     public static final double kZeroOffset = 0.0;
     public static final double kHomePosition = 0.00 ;       
-    public static final double kScoreInAmpPosition = 0.00 ;     
-    public static final double kScoreInTrapPosition = 0.0 ;     // TA TODO: Need to fix this when testing Trap climbing
+    public static final double kScoreInAmpPosition = 0.0 ;    
+    public static final double kScoreInTrapPosition = 0.0 ;     
 
 
     public static final double kTolerance = 0.5 ;     
@@ -181,19 +198,20 @@ public static final class ClimberConstants {
     public static final int kLeftClimberMotorPort = 41;
     public static final int kRightClimberMotorPort = 42;
 
-    public static final double kUpSpeed = 0.15;      // 0.5 too fast for now
-    public static final double kDownSpeed = -0.05;
+    public static final double kUpSpeed = 0.5;      // now 25:1 raise speed
+    public static final double kDownSpeed = -0.5;
 
     // CanSparkMax Encoder native units is rotations. We convert to inches for the elevator
     // rotations * circumference of wheel (pi*d) / the gear ratio: 
     // d= sprocket diameter * pulley diameter, 1.757*1.041" and gear down is 5:1 
     // THere is a factor of 2 that I dont understand?!?
 //    public static final double kEncoderRotation2Inches = 1.0 * Math.PI * (1.757 * 1.041) / 5  * 1.925061;
-    public static final double kEncoderRotation2Inches = 1.0 ;
+    public static final double kEncoderRotation2Inches = 2.0 ;
 
     // ****    Below are the PID values for Smart Motion Mode PID - DO not remove;
 // ****    This is a Position based PID That uses a Trapazoidal Profile for movement
-    public static final double kP = 0.00020; 
+//    public static final double kP = 0.00020; 
+    public static final double kP = 0.00040;        // changed from 15:1 to 25:1 - need larger P
     public static final double kI = 0.0;
     public static final double kD = 0; 
     public static final double kIz = 0; 
@@ -204,10 +222,10 @@ public static final class ClimberConstants {
 // Smart Motion Coefficients
     public static final int smartMotionSlot = 0;
     public static final double kMinVel = 0;      // rpm
-    public static final double kMaxVelUp = 1500;   // rpm    // TODO: TA - Optimize - was 4000, start with 500 for testing
+    public static final double kMaxVelUp = 2500;   // rpm    // TODO: TA - Optimize - was 4000, start with 500 for testing
     public static final double kMaxAccUp = 1500;             // TODO: TA - Optimize - was 4000, start with 500 for testing
-    public static final double kMaxVelDown = 500;   // rpm    // TODO: TA - Optimize - was 4000, start with 500 for testing
-    public static final double kMaxAccDown = 500;             // TODO: TA - Optimize - was 4000, start with 500 for testing
+    public static final double kMaxVelDown = 2500;   // rpm    // TODO: TA - Optimize - was 4000, start with 500 for testing
+    public static final double kMaxAccDown = 1500;             // TODO: TA - Optimize - was 4000, start with 500 for testing
     public static final double kAllowedErr = 0;
     
 // ****    Above are the PID values for Smart Motion Mode PID - DO not remove;
@@ -220,7 +238,7 @@ public static final class ClimberConstants {
     public static final double kTolerance = 0.5 ;      
     
     public static float kReverseSoftLimit = 0;
-    public static float kForwardSoftLimit = 48;
+    public static float kForwardSoftLimit = 21;
 
     public static double kSmallMoveInches = 3;
 

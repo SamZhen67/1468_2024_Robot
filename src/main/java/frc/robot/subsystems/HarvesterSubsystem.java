@@ -24,11 +24,23 @@ public class HarvesterSubsystem extends SubsystemBase {
   public HarvesterSubsystem() {
     // Instantiate the harvester motor controller
     m_harvester = new CANSparkMax(HARVESTER_MOTOR_ID, MotorType.kBrushless);
-
+    m_harvester.setSmartCurrentLimit(60);
+    m_harvester.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
     // Reverse it if needed
     m_harvester.setInverted(HARVESTER_INVERT);
   }
+
+  /* Set harvester motor to Brake Mode */
+  public void setBrakeMode() {
+     m_harvester.setIdleMode(CANSparkMax.IdleMode.kBrake);
+ }
+
+  /* Set harvester motor to Coast Mode */
+  public void setCoastMode() {
+     m_harvester.setIdleMode(CANSparkMax.IdleMode.kCoast);
+ }
+
 
   /* Set power to the harvester motor */
   public void getNote() {

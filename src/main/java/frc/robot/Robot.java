@@ -5,11 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.ElbowSubsystem;
-import frc.robot.subsystems.ElevatorSubsystem;
+
 import edu.wpi.first.net.PortForwarder;
 
 /**
@@ -24,10 +24,10 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private  ElbowSubsystem s_Elbow ;
-  private  ElevatorSubsystem s_Elevator ;
-  private  ClimberSubsystem s_Climber ;
+  private BlinkinLEDController m_BlinkinLEDController;
 
+  private double startTime, currentTime;
+  private boolean disabledCoastModeSet = false;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -38,9 +38,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-//    s_Elbow = new ElbowSubsystem();
-//    s_Elevator = new ElevatorSubsystem();
-//    s_Climber = new ClimberSubsystem();
+    m_BlinkinLEDController = new BlinkinLEDController();
+
 
     // Setup Port Forwarding to enable Limelight communication while tethered to your robot over USB.
     // Forward ports 5800, 5801, 5802, 5803, 5804, 5805, 5806, and 5807
@@ -69,25 +68,54 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
 
-//    s_Elbow.setElbowMotorsToCoast();
-//    s_Elevator.setElevatorMotorsToCoast();
-//    s_Climber.setClimberMotorsToCoast();
+    startTime = Timer.getFPGATimestamp();
+    disabledCoastModeSet = false;
 
   }
 
   @Override
   public void disabledPeriodic() {
+/**/
+    currentTime =  Timer.getFPGATimestamp();
+    if( (currentTime-startTime > 7.0) && !disabledCoastModeSet) {
+      m_robotContainer.s_Climber.setCoastMode();
+      m_robotContainer.s_Elbow.setCoastMode();
+//      m_robotContainer.s_Elevator.setCoastMode();
+      m_robotContainer.s_Harvester.setCoastMode();
+      m_robotContainer.s_Shooter.setCoastMode();
+      m_robotContainer.s_Storage.setCoastMode();
+      m_robotContainer.s_Swerve.mSwerveMods[0].setCoastMode();
+      m_robotContainer.s_Swerve.mSwerveMods[1].setCoastMode();
+      m_robotContainer.s_Swerve.mSwerveMods[2].setCoastMode();
+      m_robotContainer.s_Swerve.mSwerveMods[3].setCoastMode();
 
+      disabledCoastModeSet = true;
+    }
+/*
+
+    if( ((int)(currentTime-startTime) % 60) == 0 ) {
+
+      m_BlinkinLEDController.setTeamColor();
+
+    }
+    */
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    
- //   s_Elbow.setElbowMotorsToBrake();
- //   s_Elevator.setElevatorMotorsToBrake();
- //   s_Climber.setClimberMotorsToBrake();
-
+ /*   */
+      m_robotContainer.s_Climber.setBrakeMode();
+      m_robotContainer.s_Elbow.setBrakeMode();
+//      m_robotContainer.s_Elevator.setBrakeMode();
+      m_robotContainer.s_Harvester.setBrakeMode();
+      m_robotContainer.s_Shooter.setBrakeMode();
+      m_robotContainer.s_Storage.setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[0].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[1].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[2].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[3].setBrakeMode();
+//*/
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -102,12 +130,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-
-    
-//    s_Elbow.setElbowMotorsToBrake();
-//    s_Elevator.setElevatorMotorsToBrake();
-//    s_Climber.setClimberMotorsToBrake();
-
+/* */
+      m_robotContainer.s_Climber.setBrakeMode();
+      m_robotContainer.s_Elbow.setBrakeMode();
+//      m_robotContainer.s_Elevator.setBrakeMode();
+      m_robotContainer.s_Harvester.setBrakeMode();
+      m_robotContainer.s_Shooter.setBrakeMode();
+      m_robotContainer.s_Storage.setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[0].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[1].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[2].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[3].setBrakeMode();
+//*/
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

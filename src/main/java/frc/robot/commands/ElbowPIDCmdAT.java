@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.ConstantsMechanisms.ElbowConstants.*;
 
 import frc.robot.ConstantsMechanisms.ElbowConstants;
+import frc.robot.ConstantsMechanisms.LimelightConstants;
 import frc.robot.subsystems.ElbowSubsystem;
 
 import com.revrobotics.CANSparkMax;
@@ -72,15 +73,30 @@ public class ElbowPIDCmdAT extends Command {
     @Override
     public void execute() {
 
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        NetworkTableEntry tv = table.getEntry("tv");
-        NetworkTableEntry tz = table.getEntry("tz");
-        double valid = tv.getDouble(0.0);
-        double zDistanceInInches = tz.getDouble(0.0);
+    //   LimelightHelpers.setPipelineIndex("limelight",LimelightConstants.SPEAKER_PIPELINE);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(LimelightConstants.SPEAKER_PIPELINE);
 
-        if (valid == 1.0) { // Execute only if Limelight sees valid target
-            setpoint = .46875 * zDistanceInInches - 9.0625;
-        }
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+
+    double[] botpose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[6]);
+
+    NetworkTableEntry tv = table.getEntry("tv");
+    double valid = tv.getDouble(0.0);
+    double xOffsetInches = botpose[0] * 39.3701;
+    double zOffsetInches = botpose[2] * 39.3701;
+    double xSq = xOffsetInches * xOffsetInches;
+    double zSq = zOffsetInches * zOffsetInches;
+    double distanceFromSpeaker = Math.sqrt(xSq + zSq);
+
+    
+    double setpoint = ElbowConstants.kScoreInSpeakerFromPodiumAngle;
+
+ 
+    if (valid == 1.0) { // Execute only if Limelight sees valid target
+        //    if (false) { // Execute only if Limelight sees valid target
+                 setpoint = .46875 * distanceFromSpeaker - 9.0625;
+              }
+     
 
         pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
         SmartDashboard.putNumber("Elbow Setpoint", setpoint);

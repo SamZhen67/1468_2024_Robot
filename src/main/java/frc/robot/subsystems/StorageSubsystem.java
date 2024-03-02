@@ -5,9 +5,12 @@ package frc.robot.subsystems;
 
 import static frc.robot.ConstantsMechanisms.StorageConstants.*;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 //import com.revrobotics.CANSparkMax;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 //import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,7 +23,7 @@ public class StorageSubsystem extends SubsystemBase {
   // Shooter Motor Controllers
   private TalonFX m_storage = new TalonFX(STORAGE_MOTOR_ID,"rio"); // KRAKEN motor
 
-  // Storage Limit Switch
+    // Storage Limit Switch
   DigitalInput storageLimitSwitch = new DigitalInput(STORAGE_LIMIT_SWITCH_ID);
 
   /** Subsystem for controlling the Storage */
@@ -28,9 +31,19 @@ public class StorageSubsystem extends SubsystemBase {
     // Instantiate the Storage motor controller
 //    m_storage = new CANSparkMax(STORAGE_MOTOR_ID, MotorType.kBrushless);
 
+    m_storage.setNeutralMode(NeutralModeValue.Brake);
 
     // Reverse it if needed
     m_storage.setInverted(STORAGE_INVERT);
+  }
+
+  /* Set Storage motor to Brake Mode */
+  public void setBrakeMode() {
+  m_storage.setNeutralMode(NeutralModeValue.Brake);
+  }
+  /* Set Storage motor to Brake Mode */
+  public void setCoastMode() {
+  m_storage.setNeutralMode(NeutralModeValue.Coast);
   }
 
   /* Set power to the Storage motor */

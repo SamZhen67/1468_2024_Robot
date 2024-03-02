@@ -21,6 +21,7 @@ public class ElbowPIDCmd extends Command {
     private double tolerance;
     private double elbowMaxVel;
     private double elbowMaxAcc;
+    private boolean firstTime = true;
 
     public ElbowPIDCmd(ElbowSubsystem elbowSubsystem, double setpoint, double tolerance) {
         this.elbowSubsystem = elbowSubsystem;
@@ -50,35 +51,42 @@ public class ElbowPIDCmd extends Command {
 
     @Override
     public void initialize() {
- 
+        firstTime = true;
+        this.pidController.setSmartMotionMaxVelocity(ElbowConstants.kMaxVelDown, smartMotionSlot);
+        this.pidController.setSmartMotionMaxAccel(ElbowConstants.kMaxAccDown, smartMotionSlot);
+
         //       System.out.println("elbowPIDCmd started!");
  //       pidController.reset();
-
-    double currentAngle = elbowSubsystem.getEncoderDegrees();
-    if(setpoint > currentAngle) 
-          {elbowMaxVel = ElbowConstants.kMaxVelUp; elbowMaxAcc = ElbowConstants.kMaxAccUp;}
-    else  {elbowMaxVel = ElbowConstants.kMaxVelDown; elbowMaxAcc = ElbowConstants.kMaxAccDown;}
-
-    this.pidController.setSmartMotionMaxVelocity(elbowMaxVel, smartMotionSlot);
-    this.pidController.setSmartMotionMaxAccel(elbowMaxAcc, smartMotionSlot);
-
-    // Using +/- 180 as inicator for small move up and down
-    if(setpoint == 180.0) setpoint = currentAngle + ElbowConstants.kSmallMoveDegrees;
-    if(setpoint == -180.0) setpoint = currentAngle - ElbowConstants.kSmallMoveDegrees;
 
     }
 
     @Override
     public void execute() {
-//        double speed = pidController.calculate(elbowSubsystem.getEncoderDegrees());
-//        elbowSubsystem.setMotor(speed);
-//       pidController.setReference(setpoint, CANSparkMax.ControlType.kPosition);
+
+        double currentAngle = elbowSubsystem.getEncoderDegrees();
+        if (firstTime) {
+
+            if(setpoint > currentAngle) 
+                {elbowMaxVel = ElbowConstants.kMaxVelUp; elbowMaxAcc = ElbowConstants.kMaxAccUp;}
+            else  {elbowMaxVel = ElbowConstants.kMaxVelDown; elbowMaxAcc = ElbowConstants.kMaxAccDown;}
+
+            this.pidController.setSmartMotionMaxVelocity(elbowMaxVel, smartMotionSlot);
+            this.pidController.setSmartMotionMaxAccel(elbowMaxAcc, smartMotionSlot);
+
+            firstTime = false;
+        }
+
+        // Using +/- 180 as inicator for small move up and down
+        if(setpoint == 180.0) setpoint = currentAngle + ElbowConstants.kSmallMoveDegrees;
+        if(setpoint == -180.0) setpoint = currentAngle - ElbowConstants.kSmallMoveDegrees;
+
         pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
-                SmartDashboard.putNumber("Elbow Tolerance", this.tolerance);
+        SmartDashboard.putNumber("Elbow Tolerance", this.tolerance);
     }
 
     @Override
     public void end(boolean interrupted) {
+        firstTime = true;
         elbowSubsystem.setMotor(0);
 //        System.out.println("elbowPIDCmd ended!");
     }
@@ -86,7 +94,13 @@ public class ElbowPIDCmd extends Command {
     @Override
     public boolean isFinished() {
         if (tolerance == 0) return false;       // hold elevator at cmded position until another command moves it
-        else return (Math.abs((elbowSubsystem.getEncoderDegrees() - setpoint)) < this.tolerance);   // else if within tolerance end Command 
+        else if (Math.abs((elbowSubsystem.getEncoderDegrees() - setpoint)) < this.tolerance)   // else if within tolerance end Command 
+            {
+                firstTime = true;
+                return true;
+            }
+        return false;
+//         return (Math.abs((elbowSubsystem.getEncoderDegrees() - setpoint)) < this.tolerance); 
     }
 }
 

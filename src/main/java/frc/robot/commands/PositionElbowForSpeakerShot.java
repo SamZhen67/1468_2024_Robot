@@ -4,8 +4,10 @@
 
 package frc.robot.commands;
 
+import frc.robot.LimelightHelpers;
 //import frc.robot.Constants;
 import frc.robot.ConstantsMechanisms.ElbowConstants;
+import frc.robot.ConstantsMechanisms.LimelightConstants;
 import frc.robot.subsystems.ElbowSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.math.MathUtil;
@@ -32,20 +34,22 @@ public class PositionElbowForSpeakerShot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+ //   LimelightHelpers.setPipelineIndex("limelight",LimelightConstants.SPEAKER_PIPELINE);
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(LimelightConstants.SPEAKER_PIPELINE);
+
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+
+    double[] botpose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[6]);
+
     NetworkTableEntry tv = table.getEntry("tv");
-    NetworkTableEntry tz = table.getEntry("tx");
     double valid = tv.getDouble(0.0);
-    double zDistanceInInches = tz.getDouble(0.0);
-
-
-  //   double horizontalOffsetThreshold = 5.0;
-
- //   double[] botpose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[6]);
-
- //   double zDistanceInInches = -botpose[2] * 39.3701;
+    double xOffsetInches = botpose[0] * 39.3701;
+    double zOffsetInches = botpose[2] * 39.3701;
+    double xSq = xOffsetInches * xOffsetInches;
+    double zSq = zOffsetInches * zOffsetInches;
+    double distanceFromSpeaker = Math.sqrt(xSq + zSq);
  
-    double elbowAngle = .46875 * zDistanceInInches - 9.0625;
+    double elbowAngle = .46875 * distanceFromSpeaker - 9.0625;
 
     if (valid == 1.0) { // Execute only if Limelight sees valid target
 //    if (false) { // Execute only if Limelight sees valid target

@@ -1,3 +1,6 @@
+/*   Removed ELevator
+
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -6,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import static frc.robot.ConstantsMechanisms.ElevatorConstants.*;
 
+import frc.robot.ConstantsMechanisms.ElbowConstants;
 import frc.robot.ConstantsMechanisms.ElevatorConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -25,6 +29,8 @@ public class ElevatorPIDCmd extends Command {
 
     private double elevMaxVel;
     private double elevMaxAcc;
+
+    private boolean firstTime = true;
 
 //     private final double elbowAngle;
 
@@ -56,16 +62,8 @@ public class ElevatorPIDCmd extends Command {
     @Override
     public void initialize() {
 
-        double currentPosition = elevatorSubsystem.getEncoderInches();
-        if(setpoint > currentPosition) 
-                {elevMaxVel = ElevatorConstants.kMaxVelUp; elevMaxAcc = ElevatorConstants.kMaxAccUp;}
-        else    {elevMaxVel = ElevatorConstants.kMaxVelDown; elevMaxAcc = ElevatorConstants.kMaxAccDown;}
-        this.pidController.setSmartMotionMaxVelocity(elevMaxVel, smartMotionSlot);
-        this.pidController.setSmartMotionMaxAccel(elevMaxAcc, smartMotionSlot);
-
-     // Using +/- 180 as inicator for small move up and down
-    if(setpoint == 180.0) setpoint = currentPosition + ElevatorConstants.kSmallMoveInches;
-    if(setpoint == -180.0) setpoint = currentPosition - ElevatorConstants.kSmallMoveInches;
+        this.pidController.setSmartMotionMaxVelocity(ElevatorConstants.kMaxVelDown, smartMotionSlot);
+        this.pidController.setSmartMotionMaxAccel(ElevatorConstants.kMaxAccDown, smartMotionSlot);
 
 //      System.out.println("ElevatorPIDCmd started!");
 //      pidController.reset();
@@ -73,14 +71,31 @@ public class ElevatorPIDCmd extends Command {
 
     @Override
     public void execute() {
+
+        if (firstTime) {
+
+            double currentPosition = elevatorSubsystem.getEncoderInches();
+            if(setpoint > currentPosition) 
+                    {elevMaxVel = ElevatorConstants.kMaxVelUp; elevMaxAcc = ElevatorConstants.kMaxAccUp;}
+            else    {elevMaxVel = ElevatorConstants.kMaxVelDown; elevMaxAcc = ElevatorConstants.kMaxAccDown;}
+            this.pidController.setSmartMotionMaxVelocity(elevMaxVel, smartMotionSlot);
+            this.pidController.setSmartMotionMaxAccel(elevMaxAcc, smartMotionSlot);
+
+        // Using +/- 180 as inicator for small move up and down
+        if(setpoint == 180.0) setpoint = currentPosition + ElevatorConstants.kSmallMoveInches;
+        if(setpoint == -180.0) setpoint = currentPosition - ElevatorConstants.kSmallMoveInches;
+
+        firstTime = false;
+        }
+
+
         pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
-//        if(elbowAngle > 10.0) pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
-//        else pidController.setReference(0.0, CANSparkMax.ControlType.kSmartMotion);
         SmartDashboard.putNumber("Elevator Tolerance", this.tolerance);
     }
 
     @Override
     public void end(boolean interrupted) {
+        firstTime = true;
  // TA 2/23/23 I think we need to comment this line out so elevator wont just "fall down"
         //       elevatorSubsystem.setMotor(0);
 //        System.out.println("ElevatorPIDCmd ended!");
@@ -89,6 +104,17 @@ public class ElevatorPIDCmd extends Command {
     @Override
     public boolean isFinished() {
         if (tolerance == 0.0) return false;               // hold elevator at cmded position until another command moves it
-        else return (Math.abs((elevatorSubsystem.getEncoderInches() - setpoint)) < this.tolerance);       // else if within tolerance end Command 
+        else if (Math.abs((elevatorSubsystem.getEncoderInches() - setpoint)) < this.tolerance)   // else if within tolerance end Command 
+        {
+            firstTime = true;
+            return true;
+        }
+    return false;
+
+//        else return (Math.abs((elevatorSubsystem.getEncoderInches() - setpoint)) < this.tolerance);       // else if within tolerance end Command 
     }
 }
+
+
+
+*/

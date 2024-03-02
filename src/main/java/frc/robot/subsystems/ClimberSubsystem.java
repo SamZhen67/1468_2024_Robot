@@ -30,7 +30,10 @@ public class ClimberSubsystem extends SubsystemBase {
         climberEncoder.setPositionConversionFactor(kEncoderRotation2Inches); // TA TODO: Determine conversion factor
         leftClimberMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, kForwardSoftLimit);
         leftClimberMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, kReverseSoftLimit);
-
+        leftClimberMotor.setSmartCurrentLimit(60);
+        rightClimberMotor.setSmartCurrentLimit(60);
+        leftClimberMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightClimberMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
       }
 
     @Override
@@ -38,12 +41,12 @@ public class ClimberSubsystem extends SubsystemBase {
        log();
     }
 
-    public void setClimberMotorsToCoast() {
+    public void setCoastMode() {
       leftClimberMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
       rightClimberMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
     }
 
-    public void setClimberMotorsToBrake() {
+    public void setBrakeMode() {
       leftClimberMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
       rightClimberMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }

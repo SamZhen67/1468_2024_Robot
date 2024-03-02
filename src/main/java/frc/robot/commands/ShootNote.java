@@ -11,9 +11,9 @@ public class ShootNote extends SequentialCommandGroup {
   public ShootNote(  StorageSubsystem storage ) {
 
     addCommands(
-      new InstantCommand(() -> storage.getNote()),
-      new WaitCommand(2.025),
-      new InstantCommand(() -> storage.stop())
+      new InstantCommand(() -> storage.getNote())
+//      new WaitCommand(2.025),
+//      new InstantCommand(() -> storage.stop())
     );
   }
 }

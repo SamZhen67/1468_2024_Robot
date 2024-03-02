@@ -29,6 +29,10 @@ public class ElbowSubsystem extends SubsystemBase {
         elbowEncoder.setPositionConversionFactor(kEncoderRotation2Degrees);
         leftElbowMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, kForwardSoftLimit);
         leftElbowMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, kReverseSoftLimit);
+        leftElbowMotor.setSmartCurrentLimit(60);
+        rightElbowMotor.setSmartCurrentLimit(60);
+        leftElbowMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightElbowMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }
 
     @Override
@@ -37,12 +41,12 @@ public class ElbowSubsystem extends SubsystemBase {
     }
 
 
-    public void setElbowMotorsToCoast() {
+    public void setCoastMode() {
       leftElbowMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
       rightElbowMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
     }
 
-    public void setElbowMotorsToBrake() {
+    public void setBrakeMode() {
       leftElbowMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
       rightElbowMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }

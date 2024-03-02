@@ -2,6 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
+/* Removed Elevator  !!!!!!!!!!
+
+
+
 package frc.robot.subsystems;
 
 import static frc.robot.ConstantsMechanisms.ElevatorConstants.*;
@@ -19,33 +24,36 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     private CANSparkMax leftElevatorMotor = new CANSparkMax(kLeftElMotorPort, CANSparkMax.MotorType.kBrushless);
     private RelativeEncoder elevatorEncoder =  leftElevatorMotor.getEncoder();//
-    private CANSparkMax rightElevatorMotor = new CANSparkMax(kRightElMotorPort, CANSparkMax.MotorType.kBrushless);
+ // Removed right motor for weight savings
+ //   private CANSparkMax rightElevatorMotor = new CANSparkMax(kRightElMotorPort, CANSparkMax.MotorType.kBrushless);
  
     public ElevatorSubsystem() {
-        leftElevatorMotor.setInverted(false);            // TA TODO: polarity of these?
-        rightElevatorMotor.setInverted(true);
-        rightElevatorMotor.follow(leftElevatorMotor, true);    // TA TODO: check if both inverts are needed
+      leftElevatorMotor.setInverted(false);            // TA TODO: polarity of these?
+//        rightElevatorMotor.setInverted(true);
+//        rightElevatorMotor.follow(leftElevatorMotor, true);    // TA TODO: check if both inverts are needed
         
-        elevatorEncoder.setPosition(kZeroOffset);     // TA TODO: Determine offset
-        elevatorEncoder.setPositionConversionFactor(kEncoderRotation2Inches); // TA TODO: Determine conversion factor
-        leftElevatorMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, kForwardSoftLimit);
-        leftElevatorMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, kReverseSoftLimit);
-
-      }
+      elevatorEncoder.setPosition(kZeroOffset);     // TA TODO: Determine offset
+      elevatorEncoder.setPositionConversionFactor(kEncoderRotation2Inches); // TA TODO: Determine conversion factor
+      leftElevatorMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, kForwardSoftLimit);
+      leftElevatorMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, kReverseSoftLimit);
+      leftElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
+      leftElevatorMotor.setSmartCurrentLimit(60);
+   }
 
     @Override
     public void periodic() {
        log();
     }
 
-    public void setElevatorMotorsToCoast() {
+    public void setCoastMode() {
       leftElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
-      rightElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
+//      rightElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
     }
 
-    public void setElevatorMotorsToBrake() {
+    public void setBrakeMode() {
       leftElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-      rightElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kBrake); }
+ //     rightElevatorMotor.setIdleMode(CANSparkMax.IdleMode.kBrake); 
+}
 
    public void resetElevatorEncGyro() {
         elevatorEncoder.setPosition(kZeroOffset);
@@ -96,13 +104,13 @@ public double getSmallDownLocation() {
    else return (kHomePosition) ;
 }
 
-    /** Return true when the elevator is at the top. */
+    //** Return true when the elevator is at the top. 
     public boolean isAtTop() {
  //       return m_ElevatorAtTop.get();
         return  ( (elevatorEncoder.getVelocity() > 0.01) && (this.getEncoderInches() > kForwardSoftLimit)   );
     }
 
-    /** Return true when the elevator is at the bottom. */
+    //** Return true when the elevator is at the bottom. 
     public boolean isAtBot() {
  //       return m_ElevatorAtBot.get();
         return  ( (elevatorEncoder.getVelocity() < -0.01) && (this.getEncoderInches() < kReverseSoftLimit)   );
@@ -114,16 +122,18 @@ public double getSmallDownLocation() {
     public void log() {
         SmartDashboard.putNumber("Elevator Encoder inches", getEncoderInches());
         SmartDashboard.putNumber("Elevator Lt motor temperature", getLeftElevatorTemp());
-        SmartDashboard.putNumber("Elevator Rt motor temperature", getRightElevatorTemp());
+//        SmartDashboard.putNumber("Elevator Rt motor temperature", getRightElevatorTemp());
 
       }
-     /** Get Temp. */
+     //** Get Temp. 
+
+
       public double getLeftElevatorTemp() {
       return leftElevatorMotor.getMotorTemperature();
    }
-      public double getRightElevatorTemp() {
-         return rightElevatorMotor.getMotorTemperature();
-      }
+//      public double getRightElevatorTemp() {
+//         return rightElevatorMotor.getMotorTemperature();
+//      }
 
 }
 
@@ -131,4 +141,4 @@ public double getSmallDownLocation() {
 
 
 
-
+*/
