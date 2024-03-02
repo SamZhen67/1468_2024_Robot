@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4,
-        "y": 6.5
+        "x": 2.5,
+        "y": 5.578852847846542
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3646446609406726,
-        "y": 6.535355339059327
+        "x": 2.2289081197880707,
+        "y": 5.217528181535237
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Harv2"
     },
     {
       "anchor": {
-        "x": 2.5,
-        "y": 6.69
+        "x": 1.2605580140737749,
+        "y": 4.682767675394506
       },
       "prevControl": {
-        "x": 2.6105440914558242,
-        "y": 6.579455908544176
+        "x": 1.6507886536899836,
+        "y": 4.798391568614123
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Shot3"
     }
   ],
   "rotationTargets": [],
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 36.86989764584399,
+    "rotation": -30.0,
     "rotateFast": false
   },
   "reversed": false,

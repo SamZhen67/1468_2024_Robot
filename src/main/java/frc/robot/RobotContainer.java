@@ -69,7 +69,7 @@ public class RobotContainer {
         // Register named commands
         NamedCommands.registerCommand("Harvest", 
             new ElbowPIDCmd( s_Elbow, ElbowConstants.kHomeAngle, ElbowConstants.kTolerance)
-            .alongWith(new HarvestNote(s_Harvester, s_Storage)));
+            .alongWith(new HarvestNote(s_Harvester, s_Storage).withTimeout(2.0)));
 
         NamedCommands.registerCommand("Shoot", 
             new ShootNote( s_Storage).withTimeout(0.5));
