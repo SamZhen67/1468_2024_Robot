@@ -16,14 +16,14 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SlideToAprilTag extends Command {
+public class DriveToAprilTag extends Command {
   private final Swerve s_Swerve;
   boolean done = false; 
   int  pipeline;
   double aprilTagOffset;
 
   /** Creates a new CenterAprilTag. */
-  public SlideToAprilTag(Swerve swerve, int pipeline, double aprilTagOffset) {
+  public DriveToAprilTag(Swerve swerve, int pipeline, double aprilTagOffset) {
     // Use addRequirements() here to declare subsystem dependencies.
     s_Swerve = swerve;
     addRequirements(s_Swerve);

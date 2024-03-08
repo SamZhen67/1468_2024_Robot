@@ -38,8 +38,8 @@ public class SetShooterVelocity extends Command {
   @Override
   public void execute() {
 
-    double leftSpeedVal = MathUtil.applyDeadband(m_leftSpeedSup.getAsDouble(), Constants.stickDeadband);
-    double rightSpeedVal = MathUtil.applyDeadband(m_rightSpeedSup.getAsDouble(), Constants.stickDeadband);
+    double leftSpeedVal = 125*MathUtil.applyDeadband(m_leftSpeedSup.getAsDouble(), Constants.stickDeadband);
+    double rightSpeedVal = 125*MathUtil.applyDeadband(m_rightSpeedSup.getAsDouble(), Constants.stickDeadband);
 
     if (m_torqueMode) {
       m_shooter.setShooterTorqueVelos(leftSpeedVal,rightSpeedVal );

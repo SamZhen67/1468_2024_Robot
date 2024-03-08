@@ -27,8 +27,8 @@ public final class Constants {
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L3); // 2024 robot currently uses L3 ratio
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(26.25); //TODO [DONE]: This must be tuned to specific robot // For a 31.5 x 31.5 base
-        public static final double wheelBase = Units.inchesToMeters(26.25); //TODO [DONE]: This must be tuned to specific robot// For a 31.5 x 31.5 base
+        public static final double trackWidth = Units.inchesToMeters(21.5);     //TODO [DONE]: TA Updated for 27x27 base - must check w/ SYSID
+        public static final double wheelBase = Units.inchesToMeters(21.5);      //TODO [DONE]: TA Updated for 27x27 base - must check w/ SYSID
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
@@ -147,15 +147,15 @@ public final class Constants {
         );
     }
 
-    public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+    public static final class AutoConstants { //TODO: TA - updated Velos and Acc's, according to Choreo -  not surer about kPs - using last years values!!!
+        public static final double kMaxSpeedMetersPerSecond = 3.783;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 8.338;
+        public static final double kMaxAngularSpeedRadiansPerSecond = 9.258;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = 42.069;
     
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
-        public static final double kPThetaController = 1;
+        public static final double kPXController = 13;
+        public static final double kPYController = 10;
+        public static final double kPThetaController = 4;
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

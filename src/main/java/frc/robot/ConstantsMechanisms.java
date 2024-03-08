@@ -17,8 +17,8 @@ package frc.robot;
 public final class ConstantsMechanisms {
 
     public static final double kSparkMaxEncoderCountsPerRev = 42.0;
-    public static final double kAmpShotDistanceFromAprilTag = 8.75;
-    public static final double kTrapShotDistanceFromAprilTag = 26.5; // TA TODO: Empirically Discover
+    public static final double kAmpShotDistanceFromAprilTag = 25.25;
+    public static final double kTrapShotDistanceFromAprilTag = 43; // TA TODO: Empirically Discover
 
 //////////////////////////    LIMELIGHT     /////////////////////////////////////////
  
@@ -39,9 +39,9 @@ public static final class HarvesterConstants {
     public static final int HARVESTER_MOTOR_ID = 21;  
     public static final boolean HARVESTER_INVERT = false;
     public static final int HARVESTER_MOTOR_PDH_CHANNEL = 5; // TA TODO: check placement
-    public static final double HARVESTER_IN_SPEED = 0.35;    // was .5
+    public static final double HARVESTER_IN_SPEED = 0.5;    // was .35 when harvester wheels were new
     public static final double HARVESTER_EJECT_SPEED = -0.95;
-    public static final int HARVESTER_LIMIT_SWITCH_ID = 1;  
+    public static final int HARVESTER_LIMIT_SWITCH_ID = 2;  
 }   
  
 
@@ -51,9 +51,9 @@ public static final class HarvesterConstants {
     public static final int STORAGE_MOTOR_ID = 22;  
     public static final boolean STORAGE_INVERT = false;
     public static final int STORAGE_MOTOR_PDH_CHANNEL = 5; // TA TODO: check placement
-    public static final double STORAGE_IN_SPEED = 0.65;     // was .95
+    public static final double STORAGE_IN_SPEED = 0.85;     // was .65 when harvester wheels were new
     public static final double STORAGE_EJECT_SPEED = -0.5;  //was .95
-    public static final int STORAGE_LIMIT_SWITCH_ID = 2;  
+    public static final int STORAGE_LIMIT_SWITCH_ID = 1;  
 }   
 
 
@@ -112,8 +112,8 @@ public static final class ElbowConstants {
     public static final double kZeroOffset = 0.0;
     public static final double kStartAngle = 0.0;
     public static final double kHomeAngle = 0.0;
-    public static final double kScoreInSpeakerFromPodiumAngle = 35.0;
-    public static final double kScoreInSpeakerFromSubwooferAngle = 20.0;
+    public static final double kScoreInSpeakerFromPodiumAngle = 30.0;       //was 35
+    public static final double kScoreInSpeakerFromSubwooferAngle = 13.0;            //TA TODO: was 20.0 - trying 22 for autonomous
     public static final double kScoreInAmpAngle = 95.0;        //105 too low
     public static final double kScoreInTrapAngle = 20.0;        
 
@@ -125,7 +125,7 @@ public static final class ElbowConstants {
 
     public static final double kTolerance = 1.50;   // only used when going to zero so loosen up
     public static final double kHoldStillTolerance = 0.0;          
-    
+    public static final double kAutoTolerance = 0.250;           // TODO TA - may have to optimize   
 
 }
 
@@ -198,21 +198,21 @@ public static final class ClimberConstants {
     public static final int kLeftClimberMotorPort = 41;
     public static final int kRightClimberMotorPort = 42;
 
-    public static final double kUpSpeed = 0.5;      // now 25:1 raise speed
-    public static final double kDownSpeed = -0.5;
+    public static final double kUpSpeed = 0.75;      // now 25:1 raise speed
+    public static final double kDownSpeed = -0.75;
 
     // CanSparkMax Encoder native units is rotations. We convert to inches for the elevator
     // rotations * circumference of wheel (pi*d) / the gear ratio: 
     // d= sprocket diameter * pulley diameter, 1.757*1.041" and gear down is 5:1 
     // THere is a factor of 2 that I dont understand?!?
 //    public static final double kEncoderRotation2Inches = 1.0 * Math.PI * (1.757 * 1.041) / 5  * 1.925061;
-    public static final double kEncoderRotation2Inches = 2.0 ;
+    public static final double kEncoderRotation2Inches = 0.1354;
 
     // ****    Below are the PID values for Smart Motion Mode PID - DO not remove;
 // ****    This is a Position based PID That uses a Trapazoidal Profile for movement
 //    public static final double kP = 0.00020; 
-    public static final double kP = 0.00040;        // changed from 15:1 to 25:1 - need larger P
-    public static final double kI = 0.0;
+    public static final double kP = 0.000600;        // changed from 15:1 to 25:1 - need larger P  .00040 was way too slow
+    public static final double kI = 0.000005;
     public static final double kD = 0; 
     public static final double kIz = 0; 
     public static final double kFF = 0.0; 
@@ -222,23 +222,23 @@ public static final class ClimberConstants {
 // Smart Motion Coefficients
     public static final int smartMotionSlot = 0;
     public static final double kMinVel = 0;      // rpm
-    public static final double kMaxVelUp = 2500;   // rpm    // TODO: TA - Optimize - was 4000, start with 500 for testing
-    public static final double kMaxAccUp = 1500;             // TODO: TA - Optimize - was 4000, start with 500 for testing
-    public static final double kMaxVelDown = 2500;   // rpm    // TODO: TA - Optimize - was 4000, start with 500 for testing
-    public static final double kMaxAccDown = 1500;             // TODO: TA - Optimize - was 4000, start with 500 for testing
+    public static final double kMaxVelUp = 40000;   // rpm    // TODO: TA - Optimize - was 4000, start with 500 for testing
+    public static final double kMaxAccUp = 20000;             // TODO: TA - Optimize - was 4000, start with 500 for testing
+    public static final double kMaxVelDown = 40000;   // rpm    // TODO: TA - Optimize - was 4000, start with 500 for testing
+    public static final double kMaxAccDown = 20000;             // TODO: TA - Optimize - was 4000, start with 500 for testing
     public static final double kAllowedErr = 0;
     
 // ****    Above are the PID values for Smart Motion Mode PID - DO not remove;
 
 
     public static final double kZeroOffset = 0.0;
-    public static final double kHomePosition = 0.25 ;       // Keep home very slightly above hard stop
+    public static final double kHomePosition = 0.0 ;       // Keep home very slightly above hard stop
     public static final double kClimbPosition = 15.0 ;       
 
     public static final double kTolerance = 0.5 ;      
     
     public static float kReverseSoftLimit = 0;
-    public static float kForwardSoftLimit = 21;
+    public static float kForwardSoftLimit = 19;
 
     public static double kSmallMoveInches = 3;
 

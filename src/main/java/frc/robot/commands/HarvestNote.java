@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import frc.robot.BlinkinLEDController;
+import frc.robot.subsystems.BlinkinLEDController;
 import frc.robot.subsystems.HarvesterSubsystem;
 import frc.robot.subsystems.StorageSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -49,6 +49,6 @@ private BlinkinLEDController s_BlinkinLEDController;
   public boolean isFinished() {
 
 //    return false;   // TODO - FIX WHEN LIMIT SW IS INSTALLED
-    return m_harvester.getHarvesterLimitSwitch();
+    return m_storage.getStorageLimitSwitch();
   }
 }

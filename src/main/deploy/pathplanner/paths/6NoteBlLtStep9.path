@@ -3,35 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5,
-        "y": 4.148007169253776
+        "x": 7.9,
+        "y": 7.399929166055516
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1675813069936,
-        "y": 4.364801969040559
+        "x": 6.310171468230262,
+        "y": 7.385476179403065
       },
       "isLocked": false,
-      "linkedName": "Harv3"
+      "linkedName": "Harv5Lt"
     },
     {
       "anchor": {
-        "x": 1.4,
-        "y": 5.0
+        "x": 4.0,
+        "y": 6.5
       },
       "prevControl": {
-        "x": 2.137102319275061,
-        "y": 4.508598453816626
+        "x": 5.604264837670807,
+        "y": 7.208234131773917
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Shot4"
+      "linkedName": "Shot5Lt"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 0.0,
-      "rotationDegrees": -10.0,
+      "rotationDegrees": 0.0,
       "rotateFast": false
     }
   ],
@@ -45,14 +45,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -30.0,
+    "rotation": 17.704401383978936,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": {
-    "rotation": -10.0,
-    "velocity": 0
-  },
+  "previewStartingState": null,
   "useDefaultConstraints": true
 }

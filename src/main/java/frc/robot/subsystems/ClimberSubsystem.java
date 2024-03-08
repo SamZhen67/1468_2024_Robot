@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import static frc.robot.ConstantsMechanisms.ClimberConstants.*;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.DigitalInput;
@@ -94,14 +96,14 @@ public double getSmallDownLocation() {
    else return (kHomePosition) ;
 }
 
-    /** Return true when the climber is at the top. */
+    /** Return true when the climber is at the top. (no hard stop on top)*/
     public boolean isAtTop() {
         return  ( (climberEncoder.getVelocity() > 0.01) && (this.getEncoderInches() > kForwardSoftLimit)   );
     }
 
-    /** Return true when the climber is at the bottom. */
+    /** Return true when the climber is at the bottom. (give 1/8" margin is its a hard stop) */
     public boolean isAtBot() {
-        return  ( (climberEncoder.getVelocity() < -0.01) && (this.getEncoderInches() < kReverseSoftLimit)   );
+        return  ( (climberEncoder.getVelocity() < -0.01) && (this.getEncoderInches() < (kReverseSoftLimit+.125))   );
     }
 
 

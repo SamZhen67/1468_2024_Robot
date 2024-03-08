@@ -3,35 +3,40 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5,
-        "y": 4.148007169253776
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 2.1675813069936,
-        "y": 4.364801969040559
-      },
-      "isLocked": false,
-      "linkedName": "Harv3"
-    },
-    {
-      "anchor": {
         "x": 1.4,
         "y": 5.0
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.8859137042217746,
+        "y": 5.9538971190618435
+      },
+      "isLocked": false,
+      "linkedName": "Shot4"
+    },
+    {
+      "anchor": {
+        "x": 7.9,
+        "y": 7.399929166055516
+      },
       "prevControl": {
-        "x": 2.137102319275061,
-        "y": 4.508598453816626
+        "x": 5.5441631756502945,
+        "y": 7.399929166055516
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Shot4"
+      "linkedName": "Harv5Lt"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.0,
-      "rotationDegrees": -10.0,
+      "waypointRelativePos": 0,
+      "rotationDegrees": -30.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
@@ -45,14 +50,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -30.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": {
-    "rotation": -10.0,
-    "velocity": 0
-  },
+  "previewStartingState": null,
   "useDefaultConstraints": true
 }

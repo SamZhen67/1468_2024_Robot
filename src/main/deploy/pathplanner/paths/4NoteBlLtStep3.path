@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 2.5,
-        "y": 6.69
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.2144551331356186,
-        "y": 6.055801407377463
+        "y": 6.365801407377463
       },
       "isLocked": false,
       "linkedName": "Harv1"
     },
     {
       "anchor": {
-        "x": 1.6074296937326271,
-        "y": 5.76674167432842
+        "x": 1.5,
+        "y": 5.56439986119409
       },
       "prevControl": {
-        "x": 1.9398483867390275,
-        "y": 5.896818554200489
+        "x": 1.8324186930064004,
+        "y": 5.6944767410661585
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,10 +32,10 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxVelocity": 3.5,
+    "maxAcceleration": 7.5,
+    "maxAngularVelocity": 530.0,
+    "maxAngularAcceleration": 1200.0
   },
   "goalEndState": {
     "velocity": 0,
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": 15.020161103504025,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

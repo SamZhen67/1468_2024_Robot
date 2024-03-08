@@ -112,15 +112,15 @@ public class ShooterSubsystem extends SubsystemBase {
   /* Set power to the Shooter motor */
   public void setShooterVoltageVelos(double ltSpeed, double rtSpeed) {
 
-    m_leftShooterMotor.setControl(m_voltageVelocity.withVelocity(-ltSpeed * 50));
-    m_rightShooterMotor.setControl(m_voltageVelocity.withVelocity(rtSpeed * 50)); 
+    m_leftShooterMotor.setControl(m_voltageVelocity.withVelocity(-ltSpeed ));
+    m_rightShooterMotor.setControl(m_voltageVelocity.withVelocity(rtSpeed )); 
   }
 
   /* Set power to the Shooter motor */
   public void setShooterTorqueVelos(double ltSpeed, double rtSpeed) {
-    m_leftShooterMotor.setControl(m_torqueVelocity.withVelocity(-ltSpeed * 50).withFeedForward(-1));  // 1 didnt work
+    m_leftShooterMotor.setControl(m_torqueVelocity.withVelocity(-ltSpeed ).withFeedForward(-1));  // 1 didnt work
 
-    m_rightShooterMotor.setControl(m_torqueVelocity.withVelocity(rtSpeed * 50).withFeedForward(-1));
+    m_rightShooterMotor.setControl(m_torqueVelocity.withVelocity(rtSpeed ).withFeedForward(-1));
 
   }
 

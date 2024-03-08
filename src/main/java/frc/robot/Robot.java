@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private BlinkinLEDController m_BlinkinLEDController;
 
   private double startTime, currentTime;
   private boolean disabledCoastModeSet = false;
@@ -38,7 +37,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    m_BlinkinLEDController = new BlinkinLEDController();
 
 
     // Setup Port Forwarding to enable Limelight communication while tethered to your robot over USB.
@@ -91,14 +89,7 @@ public class Robot extends TimedRobot {
 
       disabledCoastModeSet = true;
     }
-/*
 
-    if( ((int)(currentTime-startTime) % 60) == 0 ) {
-
-      m_BlinkinLEDController.setTeamColor();
-
-    }
-    */
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -109,7 +100,7 @@ public class Robot extends TimedRobot {
       m_robotContainer.s_Elbow.setBrakeMode();
 //      m_robotContainer.s_Elevator.setBrakeMode();
       m_robotContainer.s_Harvester.setBrakeMode();
-      m_robotContainer.s_Shooter.setBrakeMode();
+//      m_robotContainer.s_Shooter.setBrakeMode();      // TODO: TA - try coast mode 
       m_robotContainer.s_Storage.setBrakeMode();
       m_robotContainer.s_Swerve.mSwerveMods[0].setBrakeMode();
       m_robotContainer.s_Swerve.mSwerveMods[1].setBrakeMode();
@@ -135,7 +126,7 @@ public class Robot extends TimedRobot {
       m_robotContainer.s_Elbow.setBrakeMode();
 //      m_robotContainer.s_Elevator.setBrakeMode();
       m_robotContainer.s_Harvester.setBrakeMode();
-      m_robotContainer.s_Shooter.setBrakeMode();
+//      m_robotContainer.s_Shooter.setBrakeMode();      // TODO: TA - try coast mode 
       m_robotContainer.s_Storage.setBrakeMode();
       m_robotContainer.s_Swerve.mSwerveMods[0].setBrakeMode();
       m_robotContainer.s_Swerve.mSwerveMods[1].setBrakeMode();

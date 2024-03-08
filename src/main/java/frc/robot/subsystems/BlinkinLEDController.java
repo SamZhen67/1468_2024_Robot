@@ -2,17 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot;
+package frc.robot.subsystems;
 
 import java.util.HashMap;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Control REV Robotics Blinkin LED controller */
-public class BlinkinLEDController {
+public class BlinkinLEDController extends SubsystemBase {
   public enum BlinkinPattern {
     /*
      * Fixed Palette Pattern
@@ -136,6 +138,7 @@ public class BlinkinLEDController {
     }
   };
 
+  private double startTime = -999, currentTime =-999;   // impossible value 
   private static BlinkinLEDController m_controller = null;
   private static Spark m_blinkin;
   private static BlinkinPattern m_currentPattern;
@@ -156,11 +159,26 @@ public class BlinkinLEDController {
   };
 
   public BlinkinLEDController() {
-    m_blinkin = new Spark(5);
+    m_blinkin = new Spark(0);
 
     m_allianceColors.put(Alliance.Red, RED_ALLIANCE_PATTERNS);
     m_allianceColors.put(Alliance.Blue, BLUE_ALLIANCE_PATTERNS);
+
+
+    
   }
+
+
+
+  @Override
+  public void periodic() {
+//        SmartDashboard.putNumber("LED Pattern",  getCurrentPattern().value);
+  }
+
+
+
+
+
 
   /**
    * Get instance of BlinkinLEDController
@@ -215,63 +233,76 @@ public class BlinkinLEDController {
     setPattern(m_allianceColors.get(DriverStation.getAlliance())[4]);
   }
 
+
+  public void slowBlinklink2Colors (BlinkinPattern color1, BlinkinPattern color2){
+    BlinkinPattern currentColor = BlinkinPattern.BLACK;
+    currentTime =  Timer.getFPGATimestamp();
+    if (currentTime - startTime > 1.0) {
+      if(currentColor != color1) currentColor = color1; else currentColor = color2;
+      startTime = currentTime;
+    }
+    setPattern(currentColor);
+  }
+
+
+  public void fastBlinklink2Colors (BlinkinPattern color1, BlinkinPattern color2){
+    BlinkinPattern currentColor = BlinkinPattern.BLACK;
+    currentTime =  Timer.getFPGATimestamp();
+    if (currentTime - startTime > .25) {
+      if(currentColor != color1) currentColor = color1; else currentColor = color2;
+      startTime = currentTime;
+    }
+    setPattern(currentColor);
+  }
+
+
+  public void longOnShortOff (BlinkinPattern color1){
+    BlinkinPattern currentColor = BlinkinPattern.BLACK;
+    currentTime =  Timer.getFPGATimestamp();
+    if ( (currentTime - startTime > .5) && (currentColor == color1) ) {currentColor = BlinkinPattern.BLACK; startTime = currentTime;} 
+    else if ( (currentTime - startTime > .25) && (currentColor != color1) ) {currentColor = color1; startTime = currentTime;} 
+    setPattern(currentColor);
+  }
+
+
+
+
+
+
+
   /**
    * Set LEDs to team color
    */
   public void setTeamColor() {
-    while (true) {
-    setPattern(BlinkinPattern.LAWN_GREEN);
-    new WaitCommand(0.5);
-    setPattern(BlinkinPattern.ORANGE); 
-    new WaitCommand(0.5);
-    }  }
+    slowBlinklink2Colors(BlinkinPattern.LAWN_GREEN,BlinkinPattern.ORANGE);
+    }  
 
   /**
    * Get current LED pattern
    * @return current LED pattern
    */
-  public BlinkinPattern getCurrentPattern() {
-    return m_currentPattern;
-  }
+  public BlinkinPattern getCurrentPattern() { return m_currentPattern; }
 
   /**
    * Turn off LEDs
    */
-  public void off() {
-    setPattern(BlinkinPattern.BLACK);
-  }
+  public void off() { setPattern(BlinkinPattern.BLACK); }
 
 
 
-  public void LED_TurnLeft () {
-    while (true) {
-    setPattern(BlinkinPattern.CP1_2_END_TO_END_BLEND_1_TO_2);
-    new WaitCommand(0.5);
-    setPattern(BlinkinPattern.BLACK); 
-    new WaitCommand(0.25);
-    }
-  }
+  public void LED_TurnLeft () { longOnShortOff(BlinkinPattern.CP1_2_END_TO_END_BLEND_1_TO_2); }
 
-  public void LED_TurnRight () {
-//    for (int i=1; i<10; ++i) {
-    while (true) {
-    setPattern(BlinkinPattern.CP1_2_END_TO_END_BLEND);
-    new WaitCommand(0.5);
-    setPattern(BlinkinPattern.BLACK); 
-    new WaitCommand(0.25);
-    }
-  }
+  public void LED_TurnRight () {longOnShortOff(BlinkinPattern.CP1_2_END_TO_END_BLEND); }
 
 
-  public void LED_Harvested () {
-//    for (int i=1; i<10; ++i) {
-    while (true) {
-    setPattern(BlinkinPattern.WHITE);
-    new WaitCommand(0.5);
-    setPattern(BlinkinPattern.BLACK); 
-    new WaitCommand(0.25);
-    }
-  }
+
+  public void LED_Harvesting () {longOnShortOff(BlinkinPattern.ORANGE); }
+
+ 
+  public void LED_Harvested () {longOnShortOff(BlinkinPattern.WHITE); }
 
   
 }
+
+
+
