@@ -10,6 +10,7 @@ import static frc.robot.ConstantsMechanisms.ElbowConstants.*;
 
 import frc.robot.ConstantsMechanisms.ElbowConstants;
 import frc.robot.ConstantsMechanisms.LimelightConstants;
+
 import frc.robot.subsystems.ElbowSubsystem;
 
 import com.revrobotics.CANSparkMax;
@@ -19,6 +20,7 @@ import com.revrobotics.SparkPIDController;
 public class ElbowPIDCmdAT extends Command {
     private final ElbowSubsystem elbowSubsystem;
     private final SparkPIDController pidController;
+ //   private BlinkinLEDController m_ledCont;
     private  double setpoint;
 //    private double maxVel;
 //    private double maxAcc;
@@ -47,6 +49,7 @@ public class ElbowPIDCmdAT extends Command {
        this.pidController.setSmartMotionMaxAccel(ElbowConstants.kMaxAccDown, smartMotionSlot);
 
         addRequirements(elbowSubsystem);
+
     }
     
 
@@ -102,11 +105,17 @@ public class ElbowPIDCmdAT extends Command {
         SmartDashboard.putNumber("Elbow Setpoint", setpoint);
         SmartDashboard.putNumber("Elbow Tolerance", this.tolerance);
 
+//        if ((Math.abs((elbowSubsystem.getEncoderDegrees() - setpoint)) > ElbowConstants.kAutoTolerance))
+//            m_ledCont.LED_Harvesting();
+//        else m_ledCont.LED_Harvested();
+
+
     }
 
     @Override
     public void end(boolean interrupted) {
         elbowSubsystem.setMotor(0);
+//        m_ledCont.off();
 //        System.out.println("elbowPIDCmd ended!");
     }
 

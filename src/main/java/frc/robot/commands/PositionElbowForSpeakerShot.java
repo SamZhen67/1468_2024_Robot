@@ -4,10 +4,10 @@
 
 package frc.robot.commands;
 
-import frc.robot.LimelightHelpers;
 //import frc.robot.Constants;
 import frc.robot.ConstantsMechanisms.ElbowConstants;
 import frc.robot.ConstantsMechanisms.LimelightConstants;
+import frc.robot.subsystems.BlinkinLEDController;
 import frc.robot.subsystems.ElbowSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.math.MathUtil;
@@ -19,12 +19,15 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class PositionElbowForSpeakerShot extends Command {
   private  ElbowSubsystem s_Elbow;
+  private BlinkinLEDController m_ledCont;
 
   /** Creates a new CenterAprilTag. */
-  public PositionElbowForSpeakerShot(ElbowSubsystem elbow) {
+  public PositionElbowForSpeakerShot(ElbowSubsystem elbow, BlinkinLEDController ledCont) {
     // Use addRequirements() here to declare subsystem dependencies.
     s_Elbow = elbow;
     addRequirements(s_Elbow);
+    m_ledCont = ledCont;
+    addRequirements(m_ledCont);
   }
 
   // Called when the command is initially scheduled.

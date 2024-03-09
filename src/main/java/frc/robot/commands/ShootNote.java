@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.BlinkinLEDController;
-import frc.robot.subsystems.HarvesterSubsystem;
+
 import frc.robot.subsystems.StorageSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,16 +13,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class ShootNote extends Command {
 private final StorageSubsystem m_storage ;
-private BlinkinLEDController s_BlinkinLEDController;
+private BlinkinLEDController m_ledCont;
 private double startTime, delayStopTime, currentTime;
 private int falseCoutner = 0;         // the limit switch should go false twice when we shoot a note out 
 private boolean currentState, previousState, done;
 
-  public ShootNote( StorageSubsystem storage) {
+  public ShootNote( StorageSubsystem storage,  BlinkinLEDController ledCont) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     m_storage = storage;
     addRequirements(m_storage);
+    m_ledCont = ledCont;
+    addRequirements(m_ledCont);
   }
 
   // Called when the command is initially scheduled.
@@ -54,6 +56,8 @@ private boolean currentState, previousState, done;
     if (currentTime - startTime > 1.0) done = true; // saftey check, should never take more than 2 seconds - was 2 now 1!
     if ((falseCoutner == 2) && (currentTime - delayStopTime > .250)) done = true; // dont stop harvestor until we're sure the note is gone - give an extra 250 msec to be sure.
 
+    if (!done) m_ledCont.LED_Shooting();
+    else m_ledCont.off();
 
   }
 
