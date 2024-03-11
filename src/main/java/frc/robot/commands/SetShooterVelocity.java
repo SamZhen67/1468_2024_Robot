@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class SetShooterVelocity extends Command {
@@ -40,6 +41,10 @@ public class SetShooterVelocity extends Command {
 
     double leftSpeedVal = 125*MathUtil.applyDeadband(m_leftSpeedSup.getAsDouble(), Constants.stickDeadband);
     double rightSpeedVal = 125*MathUtil.applyDeadband(m_rightSpeedSup.getAsDouble(), Constants.stickDeadband);
+
+    SmartDashboard.putNumber("Shooter LtMtr JyStk", m_leftSpeedSup.getAsDouble());
+    SmartDashboard.putNumber("Shooter RtMtr Jystk", m_rightSpeedSup.getAsDouble());
+
 
     if (m_torqueMode) {
       m_shooter.setShooterTorqueVelos(leftSpeedVal,rightSpeedVal );

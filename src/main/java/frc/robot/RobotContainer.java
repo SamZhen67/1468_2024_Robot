@@ -135,9 +135,9 @@ public class RobotContainer {
         final JoystickButton rt5CenterTrapAprilTag = new JoystickButton(driverRightJoystick, 5);
 
 
-        final JoystickButton lt4CenterAmpAprilTag = new JoystickButton(driverLeftJoystick, 4);
+//        final JoystickButton lt4CenterAmpAprilTag = new JoystickButton(driverLeftJoystick, 4);
 
-        final JoystickButton lt5CenterTrapAprilTag = new JoystickButton(driverLeftJoystick, 5);
+//        final JoystickButton lt5CenterTrapAprilTag = new JoystickButton(driverLeftJoystick, 5);
         // Assign default swerve command
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -284,10 +284,10 @@ public class RobotContainer {
 
 
         rightPovArmTo4MShot.debounce(.1)
-            .onTrue(new ElbowPIDCmd( s_Elbow, 45, ElbowConstants.kHoldStillTolerance )
+            .onTrue(new ElbowPIDCmd( s_Elbow, 37, ElbowConstants.kHoldStillTolerance )
             .alongWith(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(), false))); 
         leftPovArmTo4pt5MShot.debounce(.1)
-            .onTrue(new ElbowPIDCmd( s_Elbow, 40, ElbowConstants.kHoldStillTolerance )
+            .onTrue(new ElbowPIDCmd( s_Elbow, 33, ElbowConstants.kHoldStillTolerance )
             .alongWith(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(), false))); 
 
 
@@ -297,8 +297,8 @@ public class RobotContainer {
             .alongWith(new InstantCommand(() -> s_Shooter.setShooterVoltageVelos(45,45 )))); // maybe 45,41
  
         // +/-180 are the indicators for doing small up/down moves
-        b7smallUpELbowButton.debounce(.1).onTrue(new ElbowPIDCmd(s_Elbow, +180, 0.0 ));       
-        b8smallDownElbowButton.debounce(.1).onTrue(new ElbowPIDCmd(s_Elbow, -180, 0.0 ));     
+//        b7smallUpELbowButton.debounce(.1).onTrue(new ElbowPIDCmd(s_Elbow, +180, 0.0 ));       
+//        b8smallDownElbowButton.debounce(.1).onTrue(new ElbowPIDCmd(s_Elbow, -180, 0.0 ));     
 
 // couldnt get PID to work, use velocity mode instead
 //        b11climberUpButton.debounce(.1)
@@ -357,8 +357,8 @@ public class RobotContainer {
             .whileTrue(new InstantCommand(() -> s_Shooter.stop()));
 
 
-        t10.debounce(.1)
-            .whileTrue(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(),  true));
+//        t10.debounce(.1)
+//            .whileTrue(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(),  true));
         t10.debounce(.1)
             .onFalse(new InstantCommand(() ->  s_Shooter.stop()));
         t11.debounce(.1)
