@@ -133,6 +133,8 @@ public class RobotContainer {
         final JoystickButton rt4CenterAmpAprilTag = new JoystickButton(driverRightJoystick, 4);
         final JoystickButton rt3RotateSpeakerAprilTag = new JoystickButton(driverRightJoystick, 3);
         final JoystickButton rt5CenterTrapAprilTag = new JoystickButton(driverRightJoystick, 5);
+        final JoystickButton centerNote = new JoystickButton(driverRightJoystick, 11);
+
 
 
 //        final JoystickButton lt4CenterAmpAprilTag = new JoystickButton(driverLeftJoystick, 4);
@@ -172,6 +174,10 @@ public class RobotContainer {
                 () -> -driverLeftJoystick.getX(), 
                 () -> -driverRightJoystick.getX(),            // slow down rotate - TA TODO - fix the way Im doing this
                 () -> lt1RobotCentric.getAsBoolean()));
+
+        centerNote.whileTrue(new DriveToNote(
+            s_Swerve, 0));
+        centerNote.onFalse(new InstantCommand( () -> s_Swerve.stop( )));
         
         rt4CenterAmpAprilTag.whileTrue( new DriveToAprilTag(s_Swerve, LimelightConstants.AMP_PIPELINE, ConstantsMechanisms.kAmpShotDistanceFromAprilTag));
         rt4CenterAmpAprilTag.onFalse(new InstantCommand( () -> s_Swerve.stop( )));
