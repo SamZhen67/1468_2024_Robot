@@ -6,11 +6,10 @@ package frc.robot.subsystems;
 
 import java.util.HashMap;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Control REV Robotics Blinkin LED controller */
@@ -198,41 +197,28 @@ public class BlinkinLEDController extends SubsystemBase {
     m_blinkin.set(m_currentPattern.value);
   }
 
-  /**
-   * Set LEDs alliance color solid pattern
-   */
+/*  Not using these routines
+  // Set LEDs alliance color solid pattern
   public void setAllianceColorSolid() {
     setPattern(m_allianceColors.get(DriverStation.getAlliance())[0]);
   }
-
-  /**
-   * Set LEDs to alliance color breath pattern
-   */
+  // Set LEDs to alliance color breath pattern
   public void setAllianceColorBreath() {
     setPattern(m_allianceColors.get(DriverStation.getAlliance())[1]);
   }
-
-  /**
-   * Set LEDs to alliance color chase pattern
-   */
+  // Set LEDs to alliance color chase pattern
   public void setAllianceColorChase() {
     setPattern(m_allianceColors.get(DriverStation.getAlliance())[2]);
   }
-
-  /**
-   * Set LEDs to alliance color shot pattern
-   */
+  //* Set LEDs to alliance color shot pattern
   public void setAllianceColorShot() {
     setPattern(m_allianceColors.get(DriverStation.getAlliance())[3]);
   }
-
-  /**
-   * Set LEDs to alliance color strobe pattern
-   */
-  public void setAllianceColorStrobe() {
+  // Set LEDs to alliance color strobe pattern
+    public void setAllianceColorStrobe() {
     setPattern(m_allianceColors.get(DriverStation.getAlliance())[4]);
   }
-
+*/
 
   public void slowBlinklink2Colors (BlinkinPattern color1, BlinkinPattern color2){
     BlinkinPattern currentColor = BlinkinPattern.BLACK;
@@ -274,7 +260,7 @@ public class BlinkinLEDController extends SubsystemBase {
    * Set LEDs to team color
    */
   public void setTeamColor() {
-    slowBlinklink2Colors(BlinkinPattern.LAWN_GREEN,BlinkinPattern.ORANGE);
+    slowBlinklink2Colors(BlinkinPattern.LAWN_GREEN,BlinkinPattern.RED_ORANGE);
     }  
 
   /**
@@ -288,18 +274,14 @@ public class BlinkinLEDController extends SubsystemBase {
    */
   public void off() { setPattern(BlinkinPattern.BLACK); }
 
-
-
   public void LED_TurnLeft () { longOnShortOff(BlinkinPattern.CP1_2_END_TO_END_BLEND_1_TO_2); }
-
   public void LED_TurnRight () {longOnShortOff(BlinkinPattern.CP1_2_END_TO_END_BLEND); }
 
+  public void LED_Harvesting () {longOnShortOff(BlinkinPattern.RED_ORANGE); }
+  public void LED_Harvested () {setPattern(BlinkinPattern.WHITE); }
 
+  public void LED_Shooting () {fastBlinklink2Colors(BlinkinPattern.WHITE,BlinkinPattern.RED_ORANGE); }
 
-  public void LED_Harvesting () {longOnShortOff(BlinkinPattern.ORANGE); }
-
- 
-  public void LED_Harvested () {longOnShortOff(BlinkinPattern.WHITE); }
 
   
 }

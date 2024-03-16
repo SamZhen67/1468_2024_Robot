@@ -17,8 +17,8 @@ package frc.robot;
 public final class ConstantsMechanisms {
 
     public static final double kSparkMaxEncoderCountsPerRev = 42.0;
-    public static final double kAmpShotDistanceFromAprilTag = 25.25;
-    public static final double kTrapShotDistanceFromAprilTag = 43; // TA TODO: Empirically Discover
+    public static final double kAmpShotDistanceFromAprilTag = 11.01;
+    public static final double kTrapShotDistanceFromAprilTag = 28.5; // TA TODO: Empirically Discover
 
 //////////////////////////    LIMELIGHT     /////////////////////////////////////////
  
@@ -112,10 +112,10 @@ public static final class ElbowConstants {
     public static final double kZeroOffset = 0.0;
     public static final double kStartAngle = 0.0;
     public static final double kHomeAngle = 0.0;
-    public static final double kScoreInSpeakerFromPodiumAngle = 30.0;       //was 35
-    public static final double kScoreInSpeakerFromSubwooferAngle = 13.0;            //TA TODO: was 20.0 - trying 22 for autonomous
-    public static final double kScoreInAmpAngle = 95.0;        //105 too low
-    public static final double kScoreInTrapAngle = 20.0;        
+    public static final double kScoreInSpeakerFromPodiumAngle = 29.0;       //was 30  //TA TODO: 
+    public static final double kScoreInSpeakerFromSubwooferAngle = 13.0;            //TA TODO: 
+    public static final double kScoreInAmpAngle = 90.0;        // TA TODO: was 95 with old setup
+    public static final double kScoreInTrapAngle = 10.0;        
 
     public static float kReverseSoftLimit = -1;
     public static float kForwardSoftLimit = 91;

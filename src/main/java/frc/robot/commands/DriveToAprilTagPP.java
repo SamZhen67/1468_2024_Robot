@@ -4,9 +4,7 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants;
-import frc.robot.ConstantsMechanisms.LimelightConstants;
-import frc.robot.LimelightHelpers;
+
 import frc.robot.subsystems.Swerve;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -17,7 +15,6 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -72,17 +69,17 @@ public class DriveToAprilTagPP extends Command {
     // double pitchDegrees = botpose[3]) ;
     double yawDegrees = botpose[4];
     // double rollDegrees = botpose[5];
-    turnRads = Units.degreesToRadians(yawDegrees); // was +
+    Rotation2d turn2D =  Rotation2d.fromDegrees(-yawDegrees);
 
     if (valid == 1.0) { // Execute only if Limelight sees valid target
 
       Pose2d currentPose = s_Swerve.getPose();
-      Rotation2d currentRotation = currentPose.getRotation();
- //     turnRads = rotation2degrees(currentRotation) - turnRads;
+
 
       // The rotation component in these poses represents the direction of travel
       Pose2d startPos = new Pose2d(currentPose.getTranslation(), new Rotation2d());
-      Pose2d endPos = new Pose2d(currentPose.getTranslation().plus(new Translation2d(-x, y)), new Rotation2d()); // was
+//      Pose2d endPos = new Pose2d(currentPose.getTranslation().plus(new Translation2d(-x, y)), new Rotation2d()); // was
+      Pose2d endPos = new Pose2d(currentPose.getTranslation().plus(new Translation2d(-y, -x)), turn2D); // was
                                                                                                                  // x,-y
 
       List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(startPos, endPos);
@@ -91,7 +88,7 @@ public class DriveToAprilTagPP extends Command {
           new PathConstraints(
               4.0, 4.0,
               Units.degreesToRadians(360), Units.degreesToRadians(540)),
-          new GoalEndState(0.0, (currentPose.getRotation())) // was - now +
+          new GoalEndState(0.0, (turn2D)) // was - now +
       );
 
       // Prevent this path from being flipped on the red alliance, since the given

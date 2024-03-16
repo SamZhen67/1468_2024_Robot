@@ -5,12 +5,10 @@ package frc.robot.subsystems;
 
 import static frc.robot.ConstantsMechanisms.StorageConstants.*;
 
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-//import com.revrobotics.CANSparkMax;
+//import com.ctre.phoenix6.configs.TalonFXConfiguration;
+
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-//import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

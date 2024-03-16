@@ -6,8 +6,8 @@ package frc.robot.subsystems;
 
 import static frc.robot.ConstantsMechanisms.ElbowConstants.*;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+//import edu.wpi.first.math.controller.ArmFeedforward;
+//import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -39,7 +39,7 @@ public class ElbowSubsystem extends SubsystemBase {
         leftElbowMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
         rightElbowMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
 // Ks is a starting point of 
-    final ArmFeedforward m_feedforward = new ArmFeedforward(1.0, 1.12, 1.95, 0.12);
+//    final ArmFeedforward m_feedforward = new ArmFeedforward(1.0, 1.12, 1.95, 0.12);
 
 
     }

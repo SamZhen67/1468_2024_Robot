@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.XboxController;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+//import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -72,28 +72,28 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("Home", 
             new InstantCommand(() -> s_Shooter.stop())
-            .alongWith(new ElbowPIDCmd( s_Elbow, ElbowConstants.kHomeAngle, ElbowConstants.kTolerance)));
+            .alongWith(new ElbowPIDCmd( s_Elbow, ElbowConstants.kHomeAngle, ElbowConstants.kTolerance )));
 
         NamedCommands.registerCommand("Harvest", 
-            new HarvestNote(s_Harvester, s_Storage).withTimeout(3.5));          // TODO: TA - might want to remove timeout here and put in Pathplanner - different times for differnet distances
+            new HarvestNote(s_Harvester, s_Storage, s_LedSubsystem).withTimeout(3.5));          // TODO: TA - might want to remove timeout here and put in Pathplanner - different times for differnet distances
 
         NamedCommands.registerCommand("Shoot", 
-            new ShootNote( s_Storage));        
+            new ShootNote( s_Storage,s_LedSubsystem));        
 
         NamedCommands.registerCommand("AimSubWoofer", 
-            new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInSpeakerFromSubwooferAngle, ElbowConstants.kAutoTolerance)
+            new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInSpeakerFromSubwooferAngle, ElbowConstants.kAutoTolerance )
             .alongWith(new InstantCommand( () -> s_Shooter.setShooterVoltageVelos(60,60 )))); 
 
         NamedCommands.registerCommand("HoldSubWoofer", 
-            new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInSpeakerFromSubwooferAngle, ElbowConstants.kHoldStillTolerance)
+            new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInSpeakerFromSubwooferAngle, ElbowConstants.kHoldStillTolerance )
             .alongWith(new InstantCommand( () -> s_Shooter.setShooterVoltageVelos(60,60 )))); 
  
             NamedCommands.registerCommand("AimFar", 
-            new ElbowPIDCmd( s_Elbow, 45, ElbowConstants.kAutoTolerance)
+            new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInSpeakerFromPodiumAngle, ElbowConstants.kAutoTolerance )
             .alongWith(new InstantCommand( () -> s_Shooter.setShooterVoltageVelos(90,60 )))); 
 
         NamedCommands.registerCommand("HoldFar", 
-            new ElbowPIDCmd( s_Elbow, 45, ElbowConstants.kHoldStillTolerance)
+            new ElbowPIDCmd( s_Elbow,  ElbowConstants.kScoreInSpeakerFromPodiumAngle, ElbowConstants.kHoldStillTolerance )
             .alongWith(new InstantCommand( () -> s_Shooter.setShooterVoltageVelos(90,60 )))); 
 
  
@@ -133,11 +133,13 @@ public class RobotContainer {
         final JoystickButton rt4CenterAmpAprilTag = new JoystickButton(driverRightJoystick, 4);
         final JoystickButton rt3RotateSpeakerAprilTag = new JoystickButton(driverRightJoystick, 3);
         final JoystickButton rt5CenterTrapAprilTag = new JoystickButton(driverRightJoystick, 5);
+        final JoystickButton centerNote = new JoystickButton(driverRightJoystick, 11);
 
 
-        final JoystickButton lt4CenterAmpAprilTag = new JoystickButton(driverLeftJoystick, 4);
 
-        final JoystickButton lt5CenterTrapAprilTag = new JoystickButton(driverLeftJoystick, 5);
+//        final JoystickButton lt4CenterAmpAprilTag = new JoystickButton(driverLeftJoystick, 4);
+
+//        final JoystickButton lt5CenterTrapAprilTag = new JoystickButton(driverLeftJoystick, 5);
         // Assign default swerve command
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
@@ -162,7 +164,7 @@ public class RobotContainer {
                 s_Swerve, 
                 () -> -driverLeftJoystick.getY(), 
                 () -> -driverLeftJoystick.getX(), 
-                () -> -driverRightJoystick.getX()/ 1.5,            // slow down rotate - TA TODO - fix the way Im doing this 
+                () -> -driverRightJoystick.getX(),            // slow down rotate - TA TODO - fix the way Im doing this 
                 () -> lt1RobotCentric.getAsBoolean()
             )
         );
@@ -170,8 +172,12 @@ public class RobotContainer {
         rt3RotateSpeakerAprilTag.whileTrue( new TeleopSwerveRotatetoSpeakerAprilTag(s_Swerve,                 
                 () -> -driverLeftJoystick.getY(), 
                 () -> -driverLeftJoystick.getX(), 
-                () -> -driverRightJoystick.getX() / 1.5,            // slow down rotate - TA TODO - fix the way Im doing this
+                () -> -driverRightJoystick.getX(),            // slow down rotate - TA TODO - fix the way Im doing this
                 () -> lt1RobotCentric.getAsBoolean()));
+
+        centerNote.whileTrue(new DriveToNote(
+            s_Swerve, 0));
+        centerNote.onFalse(new InstantCommand( () -> s_Swerve.stop( )));
         
         rt4CenterAmpAprilTag.whileTrue( new DriveToAprilTag(s_Swerve, LimelightConstants.AMP_PIPELINE, ConstantsMechanisms.kAmpShotDistanceFromAprilTag));
         rt4CenterAmpAprilTag.onFalse(new InstantCommand( () -> s_Swerve.stop( )));
@@ -179,19 +185,11 @@ public class RobotContainer {
         rt5CenterTrapAprilTag.whileTrue( new DriveToAprilTag(s_Swerve, LimelightConstants.TRAP_PIPELINE, ConstantsMechanisms.kTrapShotDistanceFromAprilTag));
         rt5CenterTrapAprilTag.onFalse(new InstantCommand( () -> s_Swerve.stop( )));
         
-       
-        lt4CenterAmpAprilTag.whileTrue( new DriveToAprilTagPP(s_Swerve, LimelightConstants.AMP_PIPELINE, ConstantsMechanisms.kAmpShotDistanceFromAprilTag)
-            .alongWith(new InstantCommand(() -> s_LedSubsystem.LED_Harvesting ()))
-            .andThen(new InstantCommand(() -> s_LedSubsystem.LED_Harvested ()).withTimeout(3.0)));
-
-
-        lt4CenterAmpAprilTag.onFalse(new InstantCommand( () -> s_Swerve.stop( )));
       
-        lt5CenterTrapAprilTag.whileTrue( new DriveToAprilTagPP(s_Swerve, LimelightConstants.TRAP_PIPELINE, ConstantsMechanisms.kTrapShotDistanceFromAprilTag)
-            .alongWith(new InstantCommand(() -> s_LedSubsystem.LED_Harvesting ()))
-            .andThen(new InstantCommand(() -> s_LedSubsystem.LED_Harvested ()).withTimeout(3.0)));
-
-        lt5CenterTrapAprilTag.onFalse(new InstantCommand( () -> s_Swerve.stop( )));
+//        lt4CenterAmpAprilTag.whileTrue( new DriveToAprilTagPP(s_Swerve, LimelightConstants.AMP_PIPELINE, ConstantsMechanisms.kAmpShotDistanceFromAprilTag));
+//        lt4CenterAmpAprilTag.onFalse(new InstantCommand( () -> s_Swerve.stop( )));
+//        lt5CenterTrapAprilTag.whileTrue( new DriveToAprilTagPP(s_Swerve, LimelightConstants.TRAP_PIPELINE, ConstantsMechanisms.kTrapShotDistanceFromAprilTag));
+//        lt5CenterTrapAprilTag.onFalse(new InstantCommand( () -> s_Swerve.stop( )));
   
 
 /*         // Driver Using PS4
@@ -258,57 +256,55 @@ public class RobotContainer {
 
 
 
-        b1shootButton.debounce(.1).whileTrue(new ShootNote( s_Storage));
+        b1shootButton.debounce(.1).whileTrue(new ShootNote(s_Storage,s_LedSubsystem));
         b1shootButton.debounce(.1)
             .onFalse(new InstantCommand(() -> s_Storage.stop())
             .alongWith(new InstantCommand(() -> s_Shooter.stop()))
-            .alongWith(new ElbowPIDCmd( s_Elbow, ElbowConstants.kHomeAngle, ElbowConstants.kTolerance)));
+            .alongWith(new ElbowPIDCmd( s_Elbow, ElbowConstants.kHomeAngle, ElbowConstants.kTolerance )));
            
         b2harvestButton.debounce(.1)
-            .whileTrue(new HarvestNote(s_Harvester, s_Storage)
-            .alongWith(Commands.run(() -> s_LedSubsystem.LED_Harvesting ()))
-            .andThen( Commands.run(() -> s_LedSubsystem.LED_Harvested ()).withTimeout(3.0)));
+            .whileTrue(new HarvestNote(s_Harvester, s_Storage, s_LedSubsystem));
 
         b3prepareToHarvestButton.debounce(.1)
-            .onTrue( new ElbowPIDCmd(s_Elbow, ElbowConstants.kHomeAngle, ElbowConstants.kTolerance) 
+            .onTrue( new ElbowPIDCmd(s_Elbow, ElbowConstants.kHomeAngle, ElbowConstants.kTolerance ) 
             .alongWith(new InstantCommand(() -> s_Shooter.stop())));
  
         b4prepareToShootAmpButton.debounce(.1)
-            .onTrue(new ElbowPIDCmd( s_Elbow, 50, ElbowConstants.kHoldStillTolerance));
+            .onTrue(new ElbowPIDCmd( s_Elbow, 50, ElbowConstants.kHoldStillTolerance ));
         b4prepareToShootAmpButton.debounce(.1)
-            .onFalse(new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInAmpAngle, ElbowConstants.kHoldStillTolerance)
-            .alongWith(new InstantCommand(() -> s_Shooter.setShooterSpeeds (.2, .2)))); 
+            .onFalse(new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInAmpAngle, ElbowConstants.kHoldStillTolerance )
+            .alongWith(new InstantCommand(() -> s_Shooter.setShooterVoltageVelos(20,20 )))); 
 
 
         b5prepareToShootSpeakerButton.debounce(.1)
-            .onTrue(new ElbowPIDCmdAT(s_Elbow,ElbowConstants.kScoreInSpeakerFromPodiumAngle,0.0)
-            .alongWith(new SetShooterSpeed(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ())));
+            .onTrue(new ElbowPIDCmdAT(s_Elbow,ElbowConstants.kScoreInSpeakerFromPodiumAngle,0.0 )
+            .alongWith(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(), false))); 
 
 
         UpPovArmToPodiumShot.debounce(.1)
-            .onTrue(new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInSpeakerFromPodiumAngle, ElbowConstants.kHoldStillTolerance)
-            .alongWith(new SetShooterSpeed(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ()))); 
+            .onTrue(new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInSpeakerFromPodiumAngle, ElbowConstants.kHoldStillTolerance )
+            .alongWith(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(), false))); 
         downPovArmToSubwooferShot.debounce(.1)
-            .onTrue(new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInSpeakerFromSubwooferAngle, ElbowConstants.kHoldStillTolerance)
-            .alongWith(new SetShooterSpeed(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ())));       
+            .onTrue(new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInSpeakerFromSubwooferAngle, ElbowConstants.kHoldStillTolerance )
+            .alongWith(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(), false))); 
 
 
         rightPovArmTo4MShot.debounce(.1)
-            .onTrue(new ElbowPIDCmd( s_Elbow, 45, ElbowConstants.kHoldStillTolerance)
-            .alongWith(new SetShooterSpeed(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ()))); 
+            .onTrue(new ElbowPIDCmd( s_Elbow, 37, ElbowConstants.kHoldStillTolerance )
+            .alongWith(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(), false))); 
         leftPovArmTo4pt5MShot.debounce(.1)
-            .onTrue(new ElbowPIDCmd( s_Elbow, 40, ElbowConstants.kHoldStillTolerance)
-            .alongWith(new SetShooterSpeed(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ()))); 
+            .onTrue(new ElbowPIDCmd( s_Elbow, 33, ElbowConstants.kHoldStillTolerance )
+            .alongWith(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(), false))); 
 
 
 
         b6prepareToShootTrapButton.debounce(.1)
-            .onTrue(new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInTrapAngle, ElbowConstants.kHoldStillTolerance)
-            .alongWith(new InstantCommand(() -> s_Shooter.setShooterSpeeds (.45, .45)))); 
+            .onTrue(new ElbowPIDCmd( s_Elbow, ElbowConstants.kScoreInTrapAngle, ElbowConstants.kHoldStillTolerance )
+            .alongWith(new InstantCommand(() -> s_Shooter.setShooterVoltageVelos(45,45 )))); // maybe 45,41
  
         // +/-180 are the indicators for doing small up/down moves
-        b7smallUpELbowButton.debounce(.1).onTrue(new ElbowPIDCmd(s_Elbow, +180, 0.0));       
-        b8smallDownElbowButton.debounce(.1).onTrue(new ElbowPIDCmd(s_Elbow, -180, 0.0));     
+//        b7smallUpELbowButton.debounce(.1).onTrue(new ElbowPIDCmd(s_Elbow, +180, 0.0 ));       
+//        b8smallDownElbowButton.debounce(.1).onTrue(new ElbowPIDCmd(s_Elbow, -180, 0.0 ));     
 
 // couldnt get PID to work, use velocity mode instead
 //        b11climberUpButton.debounce(.1)
@@ -328,8 +324,8 @@ public class RobotContainer {
         final JoystickButton t1 = new JoystickButton(testOprJoystick, 1);
         final JoystickButton t2 = new JoystickButton(testOprJoystick, 2);
         final JoystickButton t3 = new JoystickButton(testOprJoystick,3);
-        final JoystickButton t4 = new JoystickButton(testOprJoystick,4);
-        final JoystickButton t5 = new JoystickButton(testOprJoystick, 5);
+//        final JoystickButton t4 = new JoystickButton(testOprJoystick,4);
+//        final JoystickButton t5 = new JoystickButton(testOprJoystick, 5);
         final JoystickButton t6 = new JoystickButton(testOprJoystick, 6);
         final JoystickButton t7 = new JoystickButton(testOprJoystick, 7);
         final JoystickButton t8 = new JoystickButton(testOprJoystick, 8);
@@ -367,8 +363,8 @@ public class RobotContainer {
             .whileTrue(new InstantCommand(() -> s_Shooter.stop()));
 
 
-        t10.debounce(.1)
-            .whileTrue(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(),  true));
+//        t10.debounce(.1)
+//            .whileTrue(new SetShooterVelocity(s_Shooter, () -> driverRightJoystick.getZ(), () -> testOprJoystick.getZ(),  true));
         t10.debounce(.1)
             .onFalse(new InstantCommand(() ->  s_Shooter.stop()));
         t11.debounce(.1)

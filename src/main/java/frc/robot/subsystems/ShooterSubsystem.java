@@ -9,12 +9,12 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.Follower;
+
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 
-import edu.wpi.first.wpilibj.XboxController;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -36,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final NeutralOut m_brake = new NeutralOut();
 
 //  private final Mechanisms m_mechanisms = new Mechanisms();
-
+  double ltSpeed,  rtSpeed;
 
 
 
@@ -71,6 +71,12 @@ public class ShooterSubsystem extends SubsystemBase {
     // Peak output of 40 amps
     configs.TorqueCurrent.PeakForwardTorqueCurrent = 40;
     configs.TorqueCurrent.PeakReverseTorqueCurrent = -40;
+    
+    // stator current limits
+    configs.CurrentLimits.StatorCurrentLimit = 60;
+    configs.CurrentLimits.StatorCurrentLimitEnable = true;
+    configs.CurrentLimits.SupplyCurrentLimit = 60;
+    configs.CurrentLimits.SupplyCurrentLimitEnable = true;
 
     /* Retry config apply up to 5 times, report if failure */
     StatusCode status = StatusCode.StatusCodeNotInitialized;
@@ -147,6 +153,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     
     // Put the speed on SmartDashboard
+
     SmartDashboard.putNumber("Shooter LtMtr Speed", m_leftShooterMotor.get());
     SmartDashboard.putNumber("Shooter RtMtr Speed", m_rightShooterMotor.get());
     SmartDashboard.putNumber("Shooter LtMtr Velo", m_leftShooterMotor.getVelocity().getValueAsDouble());

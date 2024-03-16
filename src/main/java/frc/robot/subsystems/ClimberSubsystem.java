@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.ConstantsMechanisms.ClimberConstants.*;
 
-import java.util.function.BooleanSupplier;
+//import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -98,12 +98,12 @@ public double getSmallDownLocation() {
 
     /** Return true when the climber is at the top. (no hard stop on top)*/
     public boolean isAtTop() {
-        return  ( (climberEncoder.getVelocity() > 0.01) && (this.getEncoderInches() > kForwardSoftLimit)   );
+        return  ( (leftClimberMotor.get() > 0.1) && (this.getEncoderInches() > kForwardSoftLimit)   );
     }
 
     /** Return true when the climber is at the bottom. (give 1/8" margin is its a hard stop) */
     public boolean isAtBot() {
-        return  ( (climberEncoder.getVelocity() < -0.01) && (this.getEncoderInches() < (kReverseSoftLimit+.125))   );
+        return  ( (leftClimberMotor.get() < -0.1) && (this.getEncoderInches() < (kReverseSoftLimit+.125))   );
     }
 
 
@@ -111,6 +111,7 @@ public double getSmallDownLocation() {
 
     public void log() {
         SmartDashboard.putNumber("Climber Encoder inches", getEncoderInches());
+        SmartDashboard.putNumber("Climber Speed", leftClimberMotor.get());
         SmartDashboard.putNumber("Climber Lt motor temperature", getLeftClimberTemp());
         SmartDashboard.putNumber("Climber Rt motor temperature", getRightClimberTemp());
 

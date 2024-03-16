@@ -4,8 +4,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-
 import frc.robot.subsystems.Swerve;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.MathUtil;
@@ -13,50 +13,46 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class DriveToAprilTag extends Command {
+public class DriveToNote extends Command {
   private final Swerve s_Swerve;
   boolean done = false; 
   int  pipeline;
-  double aprilTagOffset;
-
-  /** Creates a new CenterAprilTag. */
-  public DriveToAprilTag(Swerve swerve, int pipeline, double aprilTagOffset) {
+  /** Creates a new DriveToNote. */
+  public DriveToNote(Swerve swerve, int pipeline) {
     // Use addRequirements() here to declare subsystem dependencies.
     s_Swerve = swerve;
     addRequirements(s_Swerve);
-    this.aprilTagOffset = aprilTagOffset;
     this.pipeline = pipeline;
-
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(pipeline);
+
+    NetworkTableInstance.getDefault().getTable("limelight-note").getEntry("pipeline").setNumber(pipeline);
 
 //    LimelightHelpers.setPipelineIndex("limelight",pipeline);
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-note");
     NetworkTableEntry tv = table.getEntry("tv");
-  //   NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry tx = table.getEntry("tx");
+    NetworkTableEntry ty = table.getEntry("ty");
+
     double valid = tv.getDouble(0.0);
   //   double horizontalOffset = tx.getDouble(0.0);
 
     double xPower, yPower, rotatePower;
   //   double horizontalOffsetThreshold = 5.0;
 
-    double[] botpose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[6]);
+    //double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-note").getEntry("botpose_targetspace").getDoubleArray(new double[6]);
 
-    double xOffsetInches = botpose[0] * 39.3701;
+    double xOffsetInches = tx.getDouble(0.0) * 39.3701;
+    
  //   double yOffsetInches = botpose[1] * 39.3701   // we want oour offset 36 inches away from robot in Y direction
-    double zOffsetInches = botpose[2] * 39.3701 + aprilTagOffset;
+    double yOffsetInches = ty.getDouble(0.0) * 39.3701;
    //  double pitchDegrees = botpose[3]) ;
-    double yawDegrees =botpose[4] ;
+    //double yawDegrees =botpose[4] ;
  //  double rollDegrees = botpose[5];
 
     // 75 overshoots  (higher is slower)
@@ -65,24 +61,19 @@ public class DriveToAprilTag extends Command {
     xPower = MathUtil.applyDeadband(xPower, .005);
 
     // 75 overshoots  (higher is slower)
-    double kZinch = 100.0;
-    if (Math.abs(zOffsetInches) >kZinch) yPower = -(kZinch/100.0)*zOffsetInches/Math.abs(zOffsetInches); else yPower = -zOffsetInches/kZinch;
+    double kYinch = 100.0;
+    if (Math.abs(yOffsetInches) >kYinch) yPower = -(kYinch/100.0)*yOffsetInches/Math.abs(yOffsetInches); else yPower = -yOffsetInches/kYinch;
     yPower = MathUtil.applyDeadband(yPower, .005);
 
-    // 20, way too fast, 75 too fast (higher is slower)
-    double kYawDeg = 100.0;
-    if (Math.abs(yawDegrees) >kYawDeg) rotatePower = -(kYawDeg/100.0)*yawDegrees/Math.abs(yawDegrees); else rotatePower = -yawDegrees/kYawDeg;
-    rotatePower = MathUtil.applyDeadband(rotatePower, .005);
-
     done = false;
-    if ((xPower==0)  &&  (yPower==0)  && (rotatePower == 0)) done = true; 
+    if ((xPower==0)  &&  (yPower==0)) done = true; 
 
 
     if (valid == 1.0) { // Execute only if Limelight sees valid target
       s_Swerve.drive(
 //        new Translation2d(xPower, yPower).times(Constants.Swerve.maxSpeed), 
         new Translation2d(-yPower, xPower).times(Constants.Swerve.maxSpeed), 
-        -rotatePower * Constants.Swerve.maxAngularVelocity, 
+        0, 
         false,                   // TA TODO: Probably want false here!!!! (was true)
         true);
       }
@@ -97,6 +88,9 @@ public class DriveToAprilTag extends Command {
     }
   }
 
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
