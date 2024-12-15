@@ -28,7 +28,7 @@ public final class Constants {
 
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(21.5);     //TODO [DONE]: TA Updated for 27x27 base - must check w/ SYSID
-        public static final double wheelBase = Units.inchesToMeters(21.5);      //TODO [DONE]: TA Updated for 27x27 base - must check w/ SYSID
+        public static final double wheelBase = Units.inchesToMeters(21.5);      //TODO [DONE]: TA Updated for 27x27 base - must check w/ SYSID        public static final double trackWidth = Units.inchesToMeters(21.5);     //TODO [DONE]: TA Updated for 27x27 base - must check w/ SYSID
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
@@ -139,8 +139,10 @@ public final class Constants {
 
         //TODO: For pathplanner tuning
         public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-            new PIDConstants(5.0, 0, 0), // Translation constants 
-            new PIDConstants(5.0, 0, 0), // Rotation constants 
+//            new PIDConstants(5.0, 0, 0), // Translation constants 
+//            new PIDConstants(5.0, 0, 0), // Rotation constants 
+            new PIDConstants(19.5, 0, 0), // Translation constants 
+            new PIDConstants(4, 0, 0), // Rotation constants 
             maxModuleSpeed, 
             flModuleOffset.getNorm(), // Drive base radius (distance from center to furthest module) 
             new ReplanningConfig()

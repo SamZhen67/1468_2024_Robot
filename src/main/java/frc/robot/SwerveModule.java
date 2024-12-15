@@ -11,6 +11,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
 import frc.lib.util.SwerveModuleConstants;
@@ -30,13 +31,20 @@ public class SwerveModule {
     private final DutyCycleOut driveDutyCycle = new DutyCycleOut(0);
     private final VelocityVoltage driveVelocity = new VelocityVoltage(0);
 
+    double currentTime, startTime;
+
     /* angle motor control requests */
     private final PositionVoltage anglePosition = new PositionVoltage(0);
 
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
-        
+
+        startTime = Timer.getFPGATimestamp();  
+        currentTime = Timer.getFPGATimestamp();        
+        while (currentTime - startTime < 2.0)     {     currentTime = Timer.getFPGATimestamp(); }
+    
+
         /* Angle Encoder Config */
         angleEncoder = new CANcoder(moduleConstants.cancoderID, "1468_CANivore_1"); //canbus must match CANivore name set in Phoenix Tuner - SZ
         configAngleEncoder();

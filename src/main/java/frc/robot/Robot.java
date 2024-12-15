@@ -140,7 +140,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    // robot finishes pathplanner paths if auto interuppted, tryng to stop this behavior
     CommandScheduler.getInstance().cancelAll();
+    m_robotContainer.s_Swerve.stop();
   }
 
   /** This function is called periodically during operator control. */

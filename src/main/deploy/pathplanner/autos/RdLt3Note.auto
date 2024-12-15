@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4,
-      "y": 5.5
+      "x": 15.8,
+      "y": 4.4
     },
-    "rotation": 0.0
+    "rotation": -120.0
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "4NoteBlCtrStep2"
+                  "pathName": "RedLt3NoteStep1"
                 }
               },
               {
@@ -66,26 +66,26 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "4NoteBlLtStep3"
+                        "pathName": "RedLt3NoteStep2"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "AimPodium"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -97,35 +97,10 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "HoldSubWoofer"
+                        "name": "HoldPodium"
                       }
                     }
                   ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "4NoteBlLtStep4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Harvest"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Home"
                 }
               }
             ]
@@ -142,60 +117,22 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "4NoteBlLtStep5"
+                        "pathName": "RedLt3NoteStep3"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Shoot"
+                        "name": "Home"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "HoldSubWoofer"
+                        "name": "Harvest"
                       }
                     }
                   ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "4NoteBlLtStep6"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Harvest"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Home"
                 }
               }
             ]
@@ -206,26 +143,26 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "4NoteBlLtStep7"
+                        "pathName": "RedLt3NoteStep4"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "HoldPodium"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -237,7 +174,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "HoldSubWoofer"
+                        "name": "HoldPodium"
                       }
                     }
                   ]

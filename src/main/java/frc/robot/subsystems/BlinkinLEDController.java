@@ -223,7 +223,7 @@ public class BlinkinLEDController extends SubsystemBase {
   public void slowBlinklink2Colors (BlinkinPattern color1, BlinkinPattern color2){
     BlinkinPattern currentColor = BlinkinPattern.BLACK;
     currentTime =  Timer.getFPGATimestamp();
-    if (currentTime - startTime > 1.0) {
+    if (currentTime - startTime > .5) {
       if(currentColor != color1) currentColor = color1; else currentColor = color2;
       startTime = currentTime;
     }
@@ -234,7 +234,7 @@ public class BlinkinLEDController extends SubsystemBase {
   public void fastBlinklink2Colors (BlinkinPattern color1, BlinkinPattern color2){
     BlinkinPattern currentColor = BlinkinPattern.BLACK;
     currentTime =  Timer.getFPGATimestamp();
-    if (currentTime - startTime > .25) {
+    if (currentTime - startTime > .1) {
       if(currentColor != color1) currentColor = color1; else currentColor = color2;
       startTime = currentTime;
     }
@@ -245,8 +245,8 @@ public class BlinkinLEDController extends SubsystemBase {
   public void longOnShortOff (BlinkinPattern color1){
     BlinkinPattern currentColor = BlinkinPattern.BLACK;
     currentTime =  Timer.getFPGATimestamp();
-    if ( (currentTime - startTime > .5) && (currentColor == color1) ) {currentColor = BlinkinPattern.BLACK; startTime = currentTime;} 
-    else if ( (currentTime - startTime > .25) && (currentColor != color1) ) {currentColor = color1; startTime = currentTime;} 
+    if ( (currentTime - startTime > .35) && (currentColor == color1) ) {currentColor = BlinkinPattern.BLACK; startTime = currentTime;} 
+    else if ( (currentTime - startTime > .15) && (currentColor != color1) ) {currentColor = color1; startTime = currentTime;} 
     setPattern(currentColor);
   }
 

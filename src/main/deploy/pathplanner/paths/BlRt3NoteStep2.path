@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.0,
-        "y": 0.8238202391897747
+        "y": 0.75
       },
       "prevControl": null,
       "nextControl": {
         "x": 7.0,
-        "y": 0.8238202391897749
+        "y": 0.7500000000000002
       },
       "isLocked": false,
       "linkedName": "BlRt3St1"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 2.5,
-        "y": 2.9
+        "x": 2.3,
+        "y": 2.8
       },
       "prevControl": {
-        "x": 3.48298245314679,
-        "y": 2.2117082763787446
+        "x": 3.28298245314679,
+        "y": 2.111708276378744
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,26 +46,26 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.5,
-      "rotationDegrees": -45.0,
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": -50.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.75,
-    "maxAcceleration": 8.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 530.0,
     "maxAngularAcceleration": 1200.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -45.0,
+    "rotation": -50.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "BLuePaths",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

@@ -18,7 +18,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -66,7 +66,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -78,14 +78,14 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "HoldFar"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -97,7 +97,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "hold"
+                        "name": "HoldFar"
                       }
                     }
                   ]
@@ -143,7 +143,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -155,14 +155,14 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimFar"
+                        "name": "HoldFar"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -174,7 +174,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "hold"
+                        "name": "HoldFar"
                       }
                     }
                   ]

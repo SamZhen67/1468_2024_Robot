@@ -16,7 +16,7 @@ import com.revrobotics.SparkPIDController;
 public class ElbowPIDCmd extends Command {
     private final ElbowSubsystem elbowSubsystem;
     private final SparkPIDController pidController;
-//    private BlinkinLEDController m_ledCont;
+
     private  double setpoint;
 //    private double maxVel;
 //    private double maxAcc;
@@ -86,29 +86,24 @@ public class ElbowPIDCmd extends Command {
         pidController.setReference(setpoint, CANSparkMax.ControlType.kSmartMotion);
         SmartDashboard.putNumber("Elbow Tolerance", this.tolerance);
 
-//        if ((Math.abs((elbowSubsystem.getEncoderDegrees() - setpoint)) > ElbowConstants.kAutoTolerance))
-//        m_ledCont.LED_Harvesting();
-//        else m_ledCont.LED_Harvested();
     }
 
     @Override
     public void end(boolean interrupted) {
         firstTime = true;
         elbowSubsystem.setMotor(0);
-//        m_ledCont.off();
 //        System.out.println("elbowPIDCmd ended!");
     }
 
     @Override
     public boolean isFinished() {
-        if (tolerance == 0) return false;       // hold elevator at cmded position until another command moves it
+        if (this.tolerance == 0) return false;       // hold elevator at cmded position until another command moves it
         else if (Math.abs((elbowSubsystem.getEncoderDegrees() - setpoint)) < this.tolerance)   // else if within tolerance end Command 
             {
                 firstTime = true;
                 return true;
             }
         return false;
-//         return (Math.abs((elbowSubsystem.getEncoderDegrees() - setpoint)) < this.tolerance); 
     }
 }
 

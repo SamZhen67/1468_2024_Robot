@@ -9,6 +9,7 @@ import frc.robot.ConstantsMechanisms.ElbowConstants;
 import frc.robot.ConstantsMechanisms.LimelightConstants;
 import frc.robot.subsystems.BlinkinLEDController;
 import frc.robot.subsystems.ElbowSubsystem;
+import frc.robot.subsystems.BlinkinLEDController.BlinkinPattern;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.math.MathUtil;
 //import edu.wpi.first.math.geometry.Translation2d;
@@ -20,6 +21,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class PositionElbowForSpeakerShot extends Command {
   private  ElbowSubsystem s_Elbow;
   private BlinkinLEDController m_ledCont;
+  double elbowAngle;
 
   /** Creates a new CenterAprilTag. */
   public PositionElbowForSpeakerShot(ElbowSubsystem elbow, BlinkinLEDController ledCont) {
@@ -51,15 +53,20 @@ public class PositionElbowForSpeakerShot extends Command {
     double xSq = xOffsetInches * xOffsetInches;
     double zSq = zOffsetInches * zOffsetInches;
     double distanceFromSpeaker = Math.sqrt(xSq + zSq);
- 
-    double elbowAngle = .46875 * distanceFromSpeaker - 9.0625;
+    // use a piecewise linear estimator to calc elbow angle
+    if(distanceFromSpeaker < 121)    elbowAngle = .275862 * distanceFromSpeaker - 4.37931;
+    else  elbowAngle = .1778 * distanceFromSpeaker + 7.5;
 
     if (valid == 1.0) { // Execute only if Limelight sees valid target
 //    if (false) { // Execute only if Limelight sees valid target
          new ElbowPIDCmd(s_Elbow, elbowAngle, 0.0);
+
+         if(s_Elbow.getEncoderDegrees()-elbowAngle < 0.33) m_ledCont.setPattern(BlinkinPattern.DARK_GREEN);
+         else m_ledCont.setPattern(BlinkinPattern.DARK_RED);
       }
     else {
          new ElbowPIDCmd(s_Elbow, ElbowConstants.kScoreInSpeakerFromPodiumAngle, 0.0);
+         m_ledCont.setPattern(BlinkinPattern.DARK_RED);
     }
   }
 

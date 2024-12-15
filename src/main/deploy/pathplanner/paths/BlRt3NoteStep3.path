@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5,
-        "y": 2.9
+        "x": 2.3,
+        "y": 2.8
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.211711212154819,
-        "y": 2.2062566406822954
+        "x": 3.002784710314722,
+        "y": 2.097215289685278
       },
       "isLocked": false,
       "linkedName": "BlRt3St2"
@@ -20,12 +20,12 @@
         "y": 1.6
       },
       "prevControl": {
-        "x": 4.485129343498123,
-        "y": 1.6
+        "x": 4.435135420764726,
+        "y": 1.5968817329119094
       },
       "nextControl": {
-        "x": 5.985129343498123,
-        "y": 1.6
+        "x": 6.333556329084489,
+        "y": 1.6042815184221921
       },
       "isLocked": false,
       "linkedName": "BlRt3StgPs"
@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 8.0,
-        "y": 2.45
+        "y": 2.4
       },
       "prevControl": {
-        "x": 6.897222808530124,
-        "y": 2.572631624136489
+        "x": 7.102212451637528,
+        "y": 1.8816621172778305
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,26 +46,26 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.1,
-      "rotationDegrees": 0.0,
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.75,
-    "maxAcceleration": 8.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 530.0,
     "maxAngularAcceleration": 1200.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 10.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "BLuePaths",
   "previewStartingState": {
     "rotation": -43.0,
     "velocity": 0

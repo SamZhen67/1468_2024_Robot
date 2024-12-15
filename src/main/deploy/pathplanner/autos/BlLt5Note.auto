@@ -18,7 +18,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -66,7 +66,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -78,14 +78,14 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "HoldSubWoofer"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -136,7 +136,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -148,14 +148,14 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "HoldSubWoofer"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -206,7 +206,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -218,14 +218,14 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "HoldSubWoofer"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -257,7 +257,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "5NoteBlLtStep8Ctr"
+                        "pathName": "5NoteBlL2RStep8Ctr"
                       }
                     },
                     {
@@ -289,20 +289,20 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "5NoteBlLtStep9Ctr"
+                        "pathName": "5NoteBlL2RStep9Ctr"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "AimPodium"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -314,7 +314,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "HoldSubWoofer"
+                        "name": "HoldPodium"
                       }
                     }
                   ]

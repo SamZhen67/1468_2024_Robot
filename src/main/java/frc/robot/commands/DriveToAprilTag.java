@@ -5,7 +5,8 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-
+import frc.robot.subsystems.BlinkinLEDController;
+import frc.robot.subsystems.BlinkinLEDController.BlinkinPattern;
 import frc.robot.subsystems.Swerve;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.MathUtil;
@@ -20,14 +21,17 @@ public class DriveToAprilTag extends Command {
   boolean done = false; 
   int  pipeline;
   double aprilTagOffset;
+  private BlinkinLEDController m_ledCont;
 
   /** Creates a new CenterAprilTag. */
-  public DriveToAprilTag(Swerve swerve, int pipeline, double aprilTagOffset) {
+  public DriveToAprilTag(Swerve swerve, int pipeline, double aprilTagOffset, BlinkinLEDController ledCont) {
     // Use addRequirements() here to declare subsystem dependencies.
     s_Swerve = swerve;
     addRequirements(s_Swerve);
     this.aprilTagOffset = aprilTagOffset;
     this.pipeline = pipeline;
+    m_ledCont = ledCont;
+    addRequirements(m_ledCont);
 
   }
 
@@ -59,28 +63,46 @@ public class DriveToAprilTag extends Command {
     double yawDegrees =botpose[4] ;
  //  double rollDegrees = botpose[5];
 
-    // 75 overshoots  (higher is slower)
-    double kXinch = 100.0;
-    if (Math.abs(xOffsetInches) >kXinch) xPower = -(kXinch/100.0)*xOffsetInches/Math.abs(xOffsetInches); else xPower = -xOffsetInches/kXinch;
-    xPower = MathUtil.applyDeadband(xPower, .005);
-
-    // 75 overshoots  (higher is slower)
-    double kZinch = 100.0;
-    if (Math.abs(zOffsetInches) >kZinch) yPower = -(kZinch/100.0)*zOffsetInches/Math.abs(zOffsetInches); else yPower = -zOffsetInches/kZinch;
-    yPower = MathUtil.applyDeadband(yPower, .005);
-
-    // 20, way too fast, 75 too fast (higher is slower)
-    double kYawDeg = 100.0;
-    if (Math.abs(yawDegrees) >kYawDeg) rotatePower = -(kYawDeg/100.0)*yawDegrees/Math.abs(yawDegrees); else rotatePower = -yawDegrees/kYawDeg;
-    rotatePower = MathUtil.applyDeadband(rotatePower, .005);
-
-    done = false;
-    if ((xPower==0)  &&  (yPower==0)  && (rotatePower == 0)) done = true; 
-
-
+ 
     if (valid == 1.0) { // Execute only if Limelight sees valid target
+
+      double kXsign = xOffsetInches/Math.abs(xOffsetInches);
+      if (Math.abs(xOffsetInches) > 24) xPower = -0.2*kXsign; 
+      else if (Math.abs(xOffsetInches) > 6) xPower = -0.1*kXsign;
+      else if (Math.abs(xOffsetInches) > 2) xPower = -0.04*kXsign;
+      else xPower = 0.0;
+
+
+      double kZsign = zOffsetInches/Math.abs(zOffsetInches);
+      if (Math.abs(zOffsetInches) > 24) yPower = -0.4*kZsign; 
+      else if (Math.abs(zOffsetInches) > 6) yPower = -0.2*kZsign;
+      else if (Math.abs(zOffsetInches) > 1) yPower = -0.05*kZsign;
+      else yPower = 0.0;
+
+
+
+
+      double kYawsign = yawDegrees/Math.abs(yawDegrees);
+      if (Math.abs(yawDegrees) > 24) rotatePower = -0.2*kYawsign; 
+      else if (Math.abs(yawDegrees) > 6) rotatePower = -0.1*kYawsign;
+      else if (Math.abs(yawDegrees) > 1) rotatePower = -0.04*kYawsign;
+      else rotatePower = 0.0;
+//      double kYawDeg = 100.0;
+//      if (Math.abs(yawDegrees) >kYawDeg) rotatePower = -yawDegrees/Math.abs(yawDegrees); else rotatePower = -yawDegrees/kYawDeg;
+//      rotatePower = MathUtil.applyDeadband(rotatePower, .02);
+
+      done = false;
+      if ((xPower==0)  &&  (yPower==0)  && (rotatePower == 0)) done = true; 
+
+
+      if (done) m_ledCont.setPattern(BlinkinPattern.WHITE);
+      else if (yPower!=0) m_ledCont.setPattern(BlinkinPattern.RED);
+      else if (rotatePower!=0) {if (rotatePower> 0) m_ledCont.LED_TurnLeft(); else m_ledCont.LED_TurnRight(); }
+      else m_ledCont.setPattern(BlinkinPattern.YELLOW);
+
+
+
       s_Swerve.drive(
-//        new Translation2d(xPower, yPower).times(Constants.Swerve.maxSpeed), 
         new Translation2d(-yPower, xPower).times(Constants.Swerve.maxSpeed), 
         -rotatePower * Constants.Swerve.maxAngularVelocity, 
         false,                   // TA TODO: Probably want false here!!!! (was true)
@@ -88,12 +110,7 @@ public class DriveToAprilTag extends Command {
       }
     else {
       s_Swerve.stop();
-//      s_Swerve.drive(
-//        new Translation2d(0, 0).times(Constants.Swerve.maxSpeed), 
-//        0 * Constants.Swerve.maxAngularVelocity, 
-//        false, 
-//        true
-//      );
+      done = true;
     }
   }
 

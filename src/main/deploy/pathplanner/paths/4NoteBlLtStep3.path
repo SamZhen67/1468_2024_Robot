@@ -3,24 +3,24 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4,
-        "y": 6.8
+        "x": 2.6,
+        "y": 6.9
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1144551331356185,
-        "y": 6.1658014073774625
+        "x": 2.3144551331356187,
+        "y": 6.265801407377463
       },
       "isLocked": false,
       "linkedName": "Harv1"
     },
     {
       "anchor": {
-        "x": 1.5,
+        "x": 1.45,
         "y": 5.56439986119409
       },
       "prevControl": {
-        "x": 1.8324186930064004,
+        "x": 1.7824186930064003,
         "y": 5.6944767410661585
       },
       "nextControl": null,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 7.5,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 530.0,
     "maxAngularAcceleration": 1200.0
   },
@@ -43,9 +43,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "BLuePaths",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": 12.153672619476978,
     "velocity": 0
   },
   "useDefaultConstraints": true

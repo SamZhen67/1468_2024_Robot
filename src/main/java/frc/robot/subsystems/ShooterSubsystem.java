@@ -33,7 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
   /* Start at velocity 0, no feed forward, use slot 1 */
   private final VelocityTorqueCurrentFOC m_torqueVelocity = new VelocityTorqueCurrentFOC(0, 0, 0, 1, false, false, false);
   /* Keep a neutral out so we can disable the motor */
-  private final NeutralOut m_brake = new NeutralOut();
+  private final NeutralOut m_brake = new NeutralOut();    //  NOT SURE IF THIS IS NEEDED
 
 //  private final Mechanisms m_mechanisms = new Mechanisms();
   double ltSpeed,  rtSpeed;
@@ -60,8 +60,8 @@ public class ShooterSubsystem extends SubsystemBase {
     configs.Slot0.kD = 0.0001; // A change of 1 rotation per second squared results in 0.01 volts output
     configs.Slot0.kV = 0.12; // Falcon 500 is a 500kV motor, 500rpm per V = 8.333 rps per V, 1/8.33 = 0.12 volts / Rotation per second
     // Peak output of 8 volts
-    configs.Voltage.PeakForwardVoltage = 8;
-    configs.Voltage.PeakReverseVoltage = -8;
+    configs.Voltage.PeakForwardVoltage = 12;
+    configs.Voltage.PeakReverseVoltage = -12;
     
     /* Torque-based velocity does not require a feed forward, as torque will accelerate the rotor up to the desired velocity by itself */
     configs.Slot1.kP = 5; // An error of 1 rotation per second results in 5 amps output
@@ -69,13 +69,13 @@ public class ShooterSubsystem extends SubsystemBase {
     configs.Slot1.kD = 0.001; // A change of 1000 rotation per second squared results in 1 amp output
 
     // Peak output of 40 amps
-    configs.TorqueCurrent.PeakForwardTorqueCurrent = 40;
-    configs.TorqueCurrent.PeakReverseTorqueCurrent = -40;
+    configs.TorqueCurrent.PeakForwardTorqueCurrent = 60; // was 40
+    configs.TorqueCurrent.PeakReverseTorqueCurrent = -60; // was -40
     
     // stator current limits
-    configs.CurrentLimits.StatorCurrentLimit = 60;
+    configs.CurrentLimits.StatorCurrentLimit = 60;    //was 60
     configs.CurrentLimits.StatorCurrentLimitEnable = true;
-    configs.CurrentLimits.SupplyCurrentLimit = 60;
+    configs.CurrentLimits.SupplyCurrentLimit = 60;    // was 60
     configs.CurrentLimits.SupplyCurrentLimitEnable = true;
 
     /* Retry config apply up to 5 times, report if failure */

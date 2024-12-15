@@ -114,7 +114,8 @@ public double getSmallDownLocation() {
         SmartDashboard.putNumber("Climber Speed", leftClimberMotor.get());
         SmartDashboard.putNumber("Climber Lt motor temperature", getLeftClimberTemp());
         SmartDashboard.putNumber("Climber Rt motor temperature", getRightClimberTemp());
-
+        SmartDashboard.putBoolean("Climber Is At Top",isAtTop());
+        SmartDashboard.putBoolean("Climber Is At Bot",isAtBot());
       }
      /** Get Temp. */
       public double getLeftClimberTemp() {

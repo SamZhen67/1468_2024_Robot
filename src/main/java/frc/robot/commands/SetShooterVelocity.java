@@ -39,8 +39,8 @@ public class SetShooterVelocity extends Command {
   @Override
   public void execute() {
 
-    double leftSpeedVal = 125*MathUtil.applyDeadband(m_leftSpeedSup.getAsDouble(), Constants.stickDeadband);
-    double rightSpeedVal = 125*MathUtil.applyDeadband(m_rightSpeedSup.getAsDouble(), Constants.stickDeadband);
+    double leftSpeedVal = 100*MathUtil.applyDeadband((m_leftSpeedSup.getAsDouble()+1)/2.0, Constants.stickDeadband);
+    double rightSpeedVal = 100*MathUtil.applyDeadband((m_rightSpeedSup.getAsDouble()+1)/2.0, Constants.stickDeadband);
 
     SmartDashboard.putNumber("Shooter LtMtr JyStk", m_leftSpeedSup.getAsDouble());
     SmartDashboard.putNumber("Shooter RtMtr Jystk", m_rightSpeedSup.getAsDouble());

@@ -79,16 +79,17 @@ public class DriveToAprilTagPP extends Command {
       // The rotation component in these poses represents the direction of travel
       Pose2d startPos = new Pose2d(currentPose.getTranslation(), new Rotation2d());
 //      Pose2d endPos = new Pose2d(currentPose.getTranslation().plus(new Translation2d(-x, y)), new Rotation2d()); // was
-      Pose2d endPos = new Pose2d(currentPose.getTranslation().plus(new Translation2d(-y, -x)), turn2D); // was
+      Pose2d endPos = new Pose2d(currentPose.getTranslation().plus(new Translation2d(-y, -x)), new Rotation2d()); // was
                                                                                                                  // x,-y
 
       List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(startPos, endPos);
       PathPlannerPath path = new PathPlannerPath(
           bezierPoints,
           new PathConstraints(
-              4.0, 4.0,
+//              4.0, 4.0,
+              3.0, 3.0,
               Units.degreesToRadians(360), Units.degreesToRadians(540)),
-          new GoalEndState(0.0, (turn2D)) // was - now +
+          new GoalEndState(0.0, (currentPose.getRotation().plus(turn2D))) 
       );
 
       // Prevent this path from being flipped on the red alliance, since the given

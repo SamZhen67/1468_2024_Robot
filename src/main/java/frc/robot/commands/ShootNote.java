@@ -35,7 +35,6 @@ private boolean currentState, previousState, done;
     falseCoutner = 0;
     currentState = m_storage.getStorageLimitSwitch();
     previousState = currentState;
-    if (!currentState) falseCoutner = 1; else falseCoutner = 0;
 
 
     m_storage.getNote();
@@ -44,17 +43,16 @@ private boolean currentState, previousState, done;
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-//    s_BlinkinLEDController.setTeamColor();
 
     currentState = m_storage.getStorageLimitSwitch();
-    if (previousState && !currentState) {
+    if (!previousState && currentState) {
       falseCoutner++;
-      if (falseCoutner == 2)     delayStopTime = Timer.getFPGATimestamp();
+      if (falseCoutner == 1)     delayStopTime = Timer.getFPGATimestamp();
     }  
 
     currentTime = Timer.getFPGATimestamp();
-    if (currentTime - startTime > 1.0) done = true; // saftey check, should never take more than 2 seconds - was 2 now 1!
-    if ((falseCoutner == 2) && (currentTime - delayStopTime > .250)) done = true; // dont stop harvestor until we're sure the note is gone - give an extra 250 msec to be sure.
+    if (currentTime - startTime > 1.15) done = true; // saftey check, should never take more than 1 second
+    if ((falseCoutner >= 1) && (currentTime - delayStopTime > .250)) done = true; // dont stop harvestor until we're sure the note is gone - give an extra 250 msec to be sure.
 
     if (!done) m_ledCont.LED_Shooting();
     else m_ledCont.off();

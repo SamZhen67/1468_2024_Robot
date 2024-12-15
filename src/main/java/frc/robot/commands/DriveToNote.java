@@ -72,7 +72,7 @@ public class DriveToNote extends Command {
     if (valid == 1.0) { // Execute only if Limelight sees valid target
       s_Swerve.drive(
 //        new Translation2d(xPower, yPower).times(Constants.Swerve.maxSpeed), 
-        new Translation2d(-yPower, xPower).times(Constants.Swerve.maxSpeed), 
+        new Translation2d(-xPower, yPower).times(Constants.Swerve.maxSpeed), 
         0, 
         false,                   // TA TODO: Probably want false here!!!! (was true)
         true);

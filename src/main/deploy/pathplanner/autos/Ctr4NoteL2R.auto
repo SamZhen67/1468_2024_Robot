@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.75,
-      "y": 6.7
+      "x": 1.4,
+      "y": 5.5
     },
-    "rotation": 60.0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
           }
         },
         {
-          "type": "race",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -43,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "4NoteBlLtStep2"
+                  "pathName": "4NoteCtrStep2L2R"
                 }
               },
               {
@@ -66,7 +66,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -78,14 +78,14 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "HoldSubWoofer"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -136,7 +136,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -148,14 +148,14 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "HoldSubWoofer"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -206,7 +206,7 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -218,14 +218,14 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSubWoofer"
+                        "name": "HoldSubWoofer"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "race",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {

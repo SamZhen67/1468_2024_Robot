@@ -48,43 +48,48 @@
     },
     {
       "anchor": {
-        "x": 7.851119927591968,
-        "y": 7.4288351393604195
+        "x": 8.2,
+        "y": 7.5
       },
       "prevControl": {
-        "x": 6.478086195609011,
-        "y": 7.4288351393604195
+        "x": 5.726530889681498,
+        "y": 7.269852286183446
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BlLt3NS1End"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.30000000000000004,
       "rotationDegrees": 0,
-      "rotateFast": true
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2.5,
+      "rotationDegrees": 0,
+      "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 7.5,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 530.0,
     "maxAngularAcceleration": 1200.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 10.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "BLuePaths",
   "previewStartingState": {
     "rotation": 61.88557072739896,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
