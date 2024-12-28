@@ -1,0 +1,118 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.2,
+        "y": 7.5
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.588222246867028,
+        "y": 6.937433593177046
+      },
+      "isLocked": false,
+      "linkedName": "BlLt3NS1End"
+    },
+    {
+      "anchor": {
+        "x": 8.2,
+        "y": 5.76674167432842
+      },
+      "prevControl": {
+        "x": 8.609447072381128,
+        "y": 6.137323347857249
+      },
+      "nextControl": {
+        "x": 7.417530328018403,
+        "y": 5.058545328358263
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.32806848712289,
+        "y": 4.119101195948871
+      },
+      "prevControl": {
+        "x": 7.512505092552578,
+        "y": 4.724196617726843
+      },
+      "nextControl": {
+        "x": 8.776111073348908,
+        "y": 3.786682502942471
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.32806848712289,
+        "y": 2.4714607175693226
+      },
+      "prevControl": {
+        "x": 8.674940166781742,
+        "y": 2.6738025307036537
+      },
+      "nextControl": {
+        "x": 7.156881593635228,
+        "y": 1.788268363034851
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.2,
+        "y": 0.7804612792324187
+      },
+      "prevControl": {
+        "x": 7.330812408103689,
+        "y": 1.401939705287862
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BlLt2NoteSt2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 2.6,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Harvest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 530.0,
+    "maxAngularAcceleration": 1200.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -20.0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "BLuePaths",
+  "previewStartingState": {
+    "rotation": 18.58563563644867,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

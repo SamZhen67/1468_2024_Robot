@@ -60,7 +60,8 @@ public class Swerve extends SubsystemBase {
 
                     var alliance = DriverStation.getAlliance();
                     if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
+//                        return alliance.get() == DriverStation.Alliance.Red;
+                        return false;
                     }
                     return false;
                 },
@@ -88,6 +89,29 @@ public class Swerve extends SubsystemBase {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
     }    
+
+
+
+    public void stop() {
+        SwerveModuleState[] swerveModuleStates =
+            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                 ChassisSpeeds.fromFieldRelativeSpeeds(
+                                    0.0, 
+                                    0.0, 
+                                    0.0, 
+                                    getYaw()
+                               
+                                ));
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], true);
+        }
+    }    
+
+
+
+
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -141,6 +165,21 @@ public class Swerve extends SubsystemBase {
         return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
     }
 
+    public double getYawDeg() {
+        return (gyro.getYaw());
+    }
+
+    // TA TODO: Done - RoboRio orientation for 2024 has pitch and Roll reversed - so fix functions to reflect this!!!!
+    public double getRoll() {
+        return (gyro.getRoll());
+    }
+    //  RoboRio orientation for 2024 has pitch and Roll reversed - so fix functions to reflect this!!!!
+    public double getPitch() {
+        return (gyro.getPitch());
+    }
+    //  RoboRio orientation for 2024 has pitch and Roll reversed - so fix functions to reflect this!!!!
+
+
     public void resetModulesToAbsolute(){
         for(SwerveModule mod : mSwerveMods){
             mod.resetToAbsolute();
@@ -157,5 +196,18 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
+
+
+        SmartDashboard.putNumber("Pitch ", getPitch());
+        SmartDashboard.putNumber("Roll ", getRoll());
+        SmartDashboard.putNumber("Yaw ", getYawDeg());
+        SmartDashboard.putNumber("X_in ", this.swerveOdometry.getPoseMeters().getX() * 39.37);
+        SmartDashboard.putNumber("Y_in ", this.swerveOdometry.getPoseMeters().getY() * 39.37);
+//        SmartDashboard.putNumber("X_in ", this.swerveOdometry.getPoseMeters().getX() * 1.00);
+//        SmartDashboard.putNumber("Y_in ", this.swerveOdometry.getPoseMeters().getY() * 1.00);
+
+
+
+
     }
 }

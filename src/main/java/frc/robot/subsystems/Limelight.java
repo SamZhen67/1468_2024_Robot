@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LimelightHelpers;
 
 public class Limelight extends SubsystemBase {
 
@@ -30,13 +31,14 @@ public class Limelight extends SubsystemBase {
 
     @Override
     public void periodic(){
+/* */        
         /// Limelight SmartDashboard
         NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         NetworkTableEntry tv = table.getEntry("tv");
         NetworkTableEntry tx = table.getEntry("tx");
         NetworkTableEntry ty = table.getEntry("ty");
         NetworkTableEntry tz = table.getEntry("tz");
-        NetworkTableEntry yaw = table.getEntry("yaw");
+//        NetworkTableEntry yaw = table.getEntry("yaw");
         NetworkTableEntry ta = table.getEntry("ta");
         double[] botpose = NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[6]);
 
@@ -45,11 +47,12 @@ public class Limelight extends SubsystemBase {
         double valid = tv.getDouble(0.0);
         double x = tx.getDouble(0.0);
         double y = ty.getDouble(0.0);
-        double z = ty.getDouble(0.0);
+        double z = tz.getDouble(0.0);
 
         double area = ta.getDouble(0.0);
 
         //post to smart dashboard periodically
+        SmartDashboard.putNumber("Pipeline", LimelightHelpers.getCurrentPipelineIndex(getName()));        
         SmartDashboard.putNumber("ValidTarget", valid);
         SmartDashboard.putNumber("LimelightX", x);
         SmartDashboard.putNumber("LimelightY", y);
@@ -58,10 +61,12 @@ public class Limelight extends SubsystemBase {
         SmartDashboard.putNumber("botpose[x]", botpose[0] * 39.3701);
         SmartDashboard.putNumber("botpose[y]", botpose[1] * 39.3701);
         SmartDashboard.putNumber("botpose[z]", botpose[2] * 39.3701);
-        SmartDashboard.putNumber("botpose[roll]", botpose[3]* (180/Math.PI) );
-        SmartDashboard.putNumber("botpose[pitch]", botpose[4]* (180/Math.PI) );
-        SmartDashboard.putNumber("botpose[yaw]", botpose[5] * (180/Math.PI));
+        SmartDashboard.putNumber("botpose[pitch]", botpose[3]) ;              //  *(180/Math.PI) );
+        SmartDashboard.putNumber("botpose[yaw]", botpose[4]) ;             //  *(180/Math.PI) );
+        SmartDashboard.putNumber("botpose[roll]", botpose[5]) ;               //  *(180/Math.PI));
 
         SmartDashboard.putNumber("LimelightArea", area);
+
+/* */        
     }
 }

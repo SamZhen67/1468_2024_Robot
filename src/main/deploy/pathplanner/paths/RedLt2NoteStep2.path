@@ -1,0 +1,124 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.6,
+        "y": 0.75
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.299162513817985,
+        "y": 1.6042815184221921
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.458145366994959,
+        "y": 2.51481967752668
+      },
+      "prevControl": {
+        "x": 8.23190447894066,
+        "y": 2.222895951005003
+      },
+      "nextControl": {
+        "x": 8.906187953220977,
+        "y": 3.0929391436247666
+      },
+      "isLocked": false,
+      "linkedName": "RdLt3Sht"
+    },
+    {
+      "anchor": {
+        "x": 8.241350567208176,
+        "y": 4.162460155906228
+      },
+      "prevControl": {
+        "x": 8.906187953220977,
+        "y": 3.324186930064002
+      },
+      "nextControl": {
+        "x": 7.922429875527826,
+        "y": 4.56457754976406
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.241350567208176,
+        "y": 5.824553620938228
+      },
+      "prevControl": {
+        "x": 7.937837847506681,
+        "y": 5.43432298132202
+      },
+      "nextControl": {
+        "x": 8.817088724392693,
+        "y": 6.5647883944611785
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.6,
+        "y": 7.25
+      },
+      "prevControl": {
+        "x": 9.556572352581325,
+        "y": 6.700786507206817
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 155.74479492335857,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 2.7,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Harvest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 530.0,
+    "maxAngularAcceleration": 1200.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 160.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "RedPaths",
+  "previewStartingState": {
+    "rotation": -170.11522101902943,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

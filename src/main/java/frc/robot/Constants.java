@@ -21,14 +21,15 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
 
     public static final class Swerve {
-        public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW- // Changed to true on 12/28/23 - SZ
+        public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW- // TODO: TA Changed to true on 12/28/23 - SZ
 
         public static final COTSFalconSwerveConstants chosenModule =  //TODO [DONE]: This must be tuned to specific robot
             COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L3); // 2024 robot currently uses L3 ratio
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(21.75); //TODO [DONE]: This must be tuned to specific robot // For a 27 x 27 base
-        public static final double wheelBase = Units.inchesToMeters(21.75); //TODO [DONE]: This must be tuned to specific robot// For a 27 x 27 base
+
+        public static final double trackWidth = Units.inchesToMeters(21.5);     //TODO [DONE]: TA Updated for 27x27 base - must check w/ SYSID
+        public static final double wheelBase = Units.inchesToMeters(21.5);      //TODO [DONE]: TA Updated for 27x27 base - must check w/ SYSID        public static final double trackWidth = Units.inchesToMeters(21.5);     //TODO [DONE]: TA Updated for 27x27 base - must check w/ SYSID
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
@@ -139,23 +140,25 @@ public final class Constants {
 
         //TODO: For pathplanner tuning
         public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-            new PIDConstants(5.0, 0, 0), // Translation constants 
-            new PIDConstants(5.0, 0, 0), // Rotation constants 
+//            new PIDConstants(5.0, 0, 0), // Translation constants 
+//            new PIDConstants(5.0, 0, 0), // Rotation constants 
+            new PIDConstants(19.5, 0, 0), // Translation constants 
+            new PIDConstants(4, 0, 0), // Rotation constants 
             maxModuleSpeed, 
             flModuleOffset.getNorm(), // Drive base radius (distance from center to furthest module) 
             new ReplanningConfig()
         );
     }
 
-    public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+    public static final class AutoConstants { //TODO: TA - updated Velos and Acc's, according to Choreo -  not surer about kPs - using last years values!!!
+        public static final double kMaxSpeedMetersPerSecond = 3.783;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 8.338;
+        public static final double kMaxAngularSpeedRadiansPerSecond = 9.258;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = 42.069;
     
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
-        public static final double kPThetaController = 1;
+        public static final double kPXController = 13;
+        public static final double kPYController = 10;
+        public static final double kPThetaController = 4;
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

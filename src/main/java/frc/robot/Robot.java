@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -23,6 +25,9 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private double startTime, currentTime;
+  private boolean disabledCoastModeSet = false;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -32,6 +37,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
 
     // Setup Port Forwarding to enable Limelight communication while tethered to your robot over USB.
     // Forward ports 5800, 5801, 5802, 5803, 5804, 5805, 5806, and 5807
@@ -58,14 +64,49 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+
+    startTime = Timer.getFPGATimestamp();
+    disabledCoastModeSet = false;
+
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+/**/
+    currentTime =  Timer.getFPGATimestamp();
+    if( (currentTime-startTime > 7.0) && !disabledCoastModeSet) {
+      m_robotContainer.s_Climber.setCoastMode();
+      m_robotContainer.s_Elbow.setCoastMode();
+//      m_robotContainer.s_Elevator.setCoastMode();
+      m_robotContainer.s_Harvester.setCoastMode();
+      m_robotContainer.s_Shooter.setCoastMode();
+      m_robotContainer.s_Storage.setCoastMode();
+      m_robotContainer.s_Swerve.mSwerveMods[0].setCoastMode();
+      m_robotContainer.s_Swerve.mSwerveMods[1].setCoastMode();
+      m_robotContainer.s_Swerve.mSwerveMods[2].setCoastMode();
+      m_robotContainer.s_Swerve.mSwerveMods[3].setCoastMode();
+
+      disabledCoastModeSet = true;
+    }
+
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+ /*   */
+      m_robotContainer.s_Climber.setBrakeMode();
+      m_robotContainer.s_Elbow.setBrakeMode();
+//      m_robotContainer.s_Elevator.setBrakeMode();
+      m_robotContainer.s_Harvester.setBrakeMode();
+//      m_robotContainer.s_Shooter.setBrakeMode();      // TODO: TA - try coast mode 
+      m_robotContainer.s_Storage.setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[0].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[1].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[2].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[3].setBrakeMode();
+//*/
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -80,6 +121,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+/* */
+      m_robotContainer.s_Climber.setBrakeMode();
+      m_robotContainer.s_Elbow.setBrakeMode();
+//      m_robotContainer.s_Elevator.setBrakeMode();
+      m_robotContainer.s_Harvester.setBrakeMode();
+//      m_robotContainer.s_Shooter.setBrakeMode();      // TODO: TA - try coast mode 
+      m_robotContainer.s_Storage.setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[0].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[1].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[2].setBrakeMode();
+      m_robotContainer.s_Swerve.mSwerveMods[3].setBrakeMode();
+//*/
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -87,6 +140,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    // robot finishes pathplanner paths if auto interuppted, tryng to stop this behavior
+    CommandScheduler.getInstance().cancelAll();
+    m_robotContainer.s_Swerve.stop();
   }
 
   /** This function is called periodically during operator control. */

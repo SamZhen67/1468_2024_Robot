@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.9,
+        "y": 5.578852847846542
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.6289081197880706,
+        "y": 5.217528181535237
+      },
+      "isLocked": false,
+      "linkedName": "Harv2"
+    },
+    {
+      "anchor": {
+        "x": 1.45,
+        "y": 5.0
+      },
+      "prevControl": {
+        "x": 1.8402306396162087,
+        "y": 5.115623893219618
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Shot3"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 530.0,
+    "maxAngularAcceleration": 1200.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -20.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "BLuePaths",
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
